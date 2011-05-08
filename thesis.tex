@@ -1,0 +1,86 @@
+\documentclass[12pt,oneside,draft]{fithesis2}  
+\usepackage[slovak]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}  
+\usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}  
+ 
+\thesistitle{Prezentační režim pro PDF prohlížeč \emph{evince}}
+\thesissubtitle{Bakalárska Práca}  
+\thesisstudent{Lukáš Bezdička}  
+\thesiswoman{false}  
+\thesisfaculty{fi}  
+\thesisyear{2011}  
+\thesisadvisor{RNDr. Jan Kasprzak}  
+\thesislang{sk}  
+ 
+\begin{document}  
+\FrontMatter  
+\ThesisTitlePage  
+ 
+\begin{ThesisDeclaration}  
+\DeclarationText  
+\AdvisorName  
+\end{ThesisDeclaration}  
+ 
+\begin{ThesisThanks}  
+Rád by som poďakoval vývojárom \emph{evince} za ustretovú pomoc pri písaní práce a obzvlášť José Aliste.
+\end{ThesisThanks}  
+ 
+\begin{ThesisAbstract}  
+...
+\end{ThesisAbstract}  
+ 
+\begin{ThesisKeyWords}  
+keyword1, keyword2, etc.  
+\end{ThesisKeyWords}  
+ 
+\MainMatter  
+%\sloppy
+\chapter{Úvod}  
+This is the first chapter of the thesis.   
+...  
+ 
+\tableofcontents          % prints table of contents  
+ 
+\chapter{Introduction}    % first chapter followed by  
+                          % many others  
+
+ 
+\chapter{GNOME Platforma}
+V roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP. V tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvorit jednoduché prostredie pracovnej plochy. Tieto projekty zostali na seba silne naviazané a spoločne s ďaľšími tvoria platformu GNOME. V tabuľke \ref{tab.GNOME} je prehľad GNOME platformy.
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|c||c||c||c||c||c||c|}
+\hline \multicolumn{3}{|c||}{\begin{tiny}
+\textit{Užívateľské prostredie}
+\end{tiny}} & \begin{tiny}
+\textit{Multimédiá}
+\end{tiny} & \begin{tiny}
+\textit{Komunikácia}
+\end{tiny} & \begin{tiny}
+\textit{Ukladanie dát}
+\end{tiny} & \begin{tiny}
+\textit{Utility}
+\end{tiny}\\
+\multicolumn {1}{|c}{GTK+} & \multicolumn {1} {c} {Cairo} & \multicolumn {1} {c||} {Clutter} & GStreamer & Telepathy & EDS & Champlain \\
+\multicolumn{1}{|c}{ATK} & \multicolumn{1}{c}{Pango} & \multicolumn{1}{c||}{Webkit} & Canberra & Avahi & GDA & Enchant \\ \cline{1-3}
+\multicolumn{3}{|c||}{\begin{tiny}
+\textit{Jadro}
+\end{tiny}} & Pulseaudio &GUPnP & Tracker & Poppler \\
+\multicolumn{1}{|c}{GIO} & \multicolumn{1}{c}{Glib} & \multicolumn{1}{c||}{GOBject} & & & GeoClue \\ \hline \hline
+\multicolumn{3}{|c||}{\begin{tiny}
+\textit{Systémová integrácia}
+\end{tiny}} & \multicolumn{4}{|c|}{{\tiny \textit{Integrácia do pracovného prostredia}}} \\
+\multicolumn{1}{|c}{upower} & \multicolumn{1}{c}{udisks} & \multicolumn{1}{c||}{policykit} & \multicolumn{1}{|c}{packagekit} & \multicolumn{1}{c}{libnotify} & \multicolumn{2}{c|}{seahorse} \\
+\hline 
+\end{tabular}
+\caption{Platforma GNOME}
+\label{tab.GNOME}
+\end{center}
+\end{table}
+
+\section{Glib}
+\bibliographystyle{plain} % sets plain bibliography style  
+\bibliography{bib-db}     % BibTeX database file  
+ 
+\end{document} 
