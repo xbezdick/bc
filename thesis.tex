@@ -3,6 +3,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
+\newcommand\uv[1]{\quotedblbase #1\textquotedblleft}%
 
 \thesistitle{Prezentační režim pro PDF prohlížeč \emph{evince}}
 \thesissubtitle{Bakalárska Práca}
@@ -84,15 +85,47 @@ GLib Fundamentals obsahuje základné typy a ich limity, štandardné makrá, ma
 
 GLib Core Application Support poskytuje správu udalostí, podporu vlákien, asynchrónne fronty, dynamické moduly, správu pamäte, vstupno-výstupné kanály a systém správ.
  
-GLib Utilities, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier - jednoduchý identifikátor zdroja definovaný v RFC 3986}.%todo citacia 
+GLib Utilities, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v RFC 3986.}.%todo citacia 
 
 GLib Data Types na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a GLib Tools.
 
-\subsection{GMainLoop}O správu udalostí v programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z rôznych zdrojov ako napríklad ukazatele na súbory, časovače alebo vlastné zdroje pridané pomocou \verb|g_source_attach()|. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v prípade nečinnosti.
-%\subsection{URI}
+\subsection{GMainLoop}O správu udalostí a signálov v programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z rôznych zdrojov ako napríklad ukazatele na súbory, časovače alebo vlastné zdroje pridané pomocou \verb|g_source_attach()|. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \verb|g_main_loop_new()|. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \verb|g_main_loop_run()|.
+
+V práci bolo potrebné pravidelne prekresliť časť okna. Pomocou funkcie \verb|g_timeout_add_seconds()| dôjde k vytvoreniu zdroja udalostí a jeho pripojeniu ku kontextu hlavného cyklu. Časovač sa taktiež dá vytvoriť pomocou funkcie \verb|g_timeout_add()|. Rozdiel medzi týmito funkciami je, že \verb|_seconds()| sa snaží zoskupiť zobudenia. Dosahuje tým väčšiu úsporu energie za cenu menšej presnosti.
+\subsection{URI} %citujem rfc...
+URI je kompaktná sekvencia znakov, ktorá identifikuje abstraktný alebo fyzický zdroj. Používa sa na identifikáciu zdrojov v sieti Internet. URI je spojením URL\footnote{Uniform Resource Locator --- jednotný lokátor zdrojov definovaný v RFC 1738} na určenie lokácie zdroja a URN\footnote{Uniform Resource Name --- jednotný názov zdrojov definovaný v RFC 1737} na identifikáciu zdroja. Na obrázku \ref{obr.URI} zobrazená syntax URI je definovaná takto:
+\begin{description}
+\item[schéma] používa sa na špecifikáciu protokolu a obmedzenie syntaxe URI identifikátorov. Schémy by mali byť registrované IANA\footnote{Internet Assigned Numbers Authority --- organizácia zastrešujúca prideľovanie ip adries, správu koreňových zón DNS a ďalšie náležitosti späté s Internetom.}.
+\item[hierarchická časť] delí sa na dve časti, a to špecifikáciu autority (začína s //), ktorá môže obsahovať informácie o užívateľovi a cestu ku zdroju.
+\item[dotaz] nepovinná nehierarchická časť identifikátora obsahujúca dodatočné identifikačné informácie. Od cesty sa oddeľuje otáznikom.%ref wiki
+\item[fragment] nepovinná časť oddelená znakom \uv{\#} na nepriamu identifikáciu sekundárneho zdroja na základe primárneho zdroja a doplňujúcej informácie. Môže ísť o nejakú konkrétnu časť zdroja alebo o iný zdroj definovaný týmito reprezentáciami.
+\end{description}
+Na prevod medzi názvom súboru a URI poskytuje GLib funkcie \\
+\verb|g_filename_from_uri| a \verb|g_filename_to_uri|.
+
+\begin{figure}[h]
+\begin{tiny}
+\begin{verbatim}
+<schéma> : <hierarchická časť> [ ? <dotaz> ] [ # <fragment> ] 
+\______/   \__________________/  \_________/   \____________/
+  |	                |                |               |
+  |	                |                |               \-----------------\
+  |                 |                \--------------------\	           |
+  |	                |-----------------------\             |	           |
+  |	             autorita                 cesta	          |	           |
+ _|_   _____________|_______________  ______|______   ____|_______   __|___
+/   \ /                             \/             \ /            \ /      \
+https://xbezdick:xbezdick@example.org/cesta/k/suboru?dotaz=xbezdick#fragment
+\end{verbatim}
+\end{tiny}
+\caption{Schéma URI s príkladom.}
+\label{obr.URI}
+\end{figure}
+
 \section{GObject}
-GLib Object System je objektovo orientovaný framework pre jazyk C postavený na GLib. GObject je navrhnutý tak aby bolo možné exportovať jeho C-API\footnote{API - rozhranie pre programovanie aplikácií} pre ostatné jazyky za pomoci jazykových väzieb. Súčasťou GLib je dynamický typový systém postavený na štruktúre GType. Táto štruktúra v skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkost inštancie triedy, pravidlá inštancií\footnote{pre C++ typ nového operátora}, kopírovacie funkcie atď. Knižnica GObject poskytuje základnú objektovú triedu GObject. GObject neumožnuje viacnásobnú dedičnost a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použit minimálne tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- kedže jazyk C nemá prístupové modifikátory \verb|public|, \verb|protected| alebo \verb|private|. GObject definuje určitú formu kódu.
+GLib Object System je objektovo orientovaný framework pre jazyk C postavený na GLib. GObject je navrhnutý tak aby bolo možné exportovať jeho C-API\footnote{API - rozhranie pre programovanie aplikácií.} pre ostatné jazyky za pomoci jazykových väzieb. Súčasťou GLib je dynamický typový systém postavený na štruktúre GType. Táto štruktúra v skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkost inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď. Knižnica GObject poskytuje základnú objektovú triedu GObject. GObject neumožnuje viacnásobnú dedičnost a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použit minimálne tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- kedže jazyk C nemá prístupové modifikátory \verb|public|, \verb|protected| alebo \verb|private|. GObject definuje určitú formu kódu.
 Pre hlavičkové súbory: %linky!
+Program potom spí v hlavnom cykle dokým sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Predanie kontroly je postavené na myšlienke predávania signálov. V prípade nejakej udalosti je odoslaný signál objektom, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor, ktorý tieto signály odchytí a zavolá vyhradenú funkciu. 
 \begin{tiny}
 \begin{verbatim}
 /*
@@ -157,7 +190,7 @@ Pre hlavičkové súbory: %linky!
 Pri inicializácii triedy \verb|ev_presentation_timer_class_init()| musí funkcia \verb|g_type_class_add_private()| registrovat privátnu štruktúru pre triedu. Pri alokácii objektu sú privátne štruktúry pre typy a typy ich rodičov sprístupnené sekvenčne v rovnakom pamäťovom bloku ako ich verejné štruktúry. Nakoniec pri inicializácii inštancie v tomto prípade \verb|ev_presentation_timer_init()| sa za pomoci makra \verb|G_TYPE_INSTANCE_GET_PRIVATE()| získa ukazateľ na privátnu dátovú štruktúru. Na implementáciu \\
 \verb|ev_presentation_timer_get_type()| funkcie a na definíciu ukazateľa na rodičovskú triedu sa používa makro \verb|G_DEFINE_TYPE|.
 %properties
-
+Program potom spí v hlavnom cykle dokým sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Predanie kontroly je postavené na myšlienke predávania signálov. V prípade nejakej udalosti je odoslaný signál objektom, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor, ktorý tieto signály odchytí a zavolá vyhradenú funkciu. 
 \section{GTK+}
 \section{Cairo}
 \chapter{evince}
