@@ -239,6 +239,18 @@ void callback_func( GtkWidget *objekt,
 A pokiaľ chceme predať callback funkcii len jeden objekt je treba použiť \verb|g_signal_connect_swapped()|.
 
 \section{GTK+}
+GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikácií tzv. widgetov. Okrem programovacieho jazyka C knižnica podporuje mnoho ďalších za pomoci väzieb. GTK+ používa tieto knižnice:
+\begin{description}
+\item[GLib] používa napríklad obalením hlavného cyklu do \verb|gtk_main()|.
+\item[GObject] každý widget je potomkom objektu GObject.
+\item[GIO] VFS\footnote{Virtual File System - systém na abstrakciu nad súborovými systémami} API na abstrakciu vstupno-výstupných operácií.
+\item[cairo] na vykresľovanie widgetov.
+\item[Pango] na prácu s textom.
+\item[ATK] toolkit na zvýšenie dostupnosti pre zrakovo, či sluchovo postihnutých ľudí.
+\item[GdkPixBuf] malá knižnica na tvorbu objektov z obrázkov.
+\item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows...
+\end{description}
+
 \section{Cairo}
 \chapter{evince}
 \section{shell}
