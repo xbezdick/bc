@@ -42,7 +42,7 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \end{ThesisKeyWords}
  
 \MainMatter
-%\sloppy
+\sloppy
 %\chapter{Predhovor}
 \setcounter{tocdepth}{3}
 \tableofcontents 
@@ -50,10 +50,10 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \chapter{Úvod}
 Prehliadač dokumentov \emph{evince}. \emph{Evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s cieľom nahradiť viaceré prehliadače dokumentov v GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. Z projektu Xpdf \emph{evince} používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.}. Takisto ako GPdf je založený na knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \verb|article| alebo \verb|book| \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k prezentáciám. Ten pozostáva zo sylabov priesvitiek ale aj poznámok, ktoré zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené na obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito možnosťami:
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k prezentáciám. Ten pozostáva zo sylabov priesvitiek ale aj poznámok, ktoré zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené na obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \texttt{\\setbeameroption\{\}} s týmito možnosťami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
-\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \verb|on second| \\ \verb|screen = <left,right,bottom,top>|.
+\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second screen~=~<left,right,bottom,top>}.
 \item[show only notes]  --- vytvorí samostatný dokument pozostávajúci len z poznámok.
 \end{description}
 Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v programoch PowerPoint alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>}, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy, alebo poznámky prednášajúceho. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, s pojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
@@ -62,7 +62,7 @@ Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
 \item Upraviť knižnicu Poppler a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
 \item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie na oboch monitoroch a znemožnila by podporu viacerých platforiem.
-\item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \verb|EvView|. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
+\item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
 Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v diskusii pod hlásením o chybe \cite{evbug}.
 
@@ -107,27 +107,28 @@ V roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GI
 \section{GLib}
 Obecná knižnica funkcií GLib vznikla oddelením kódu ktorý nebol priamo špecifický pre grafické užívateľské rozhranie GTK+. GLib poskytuje abstrakciu nad platformami a používa sa ako základ programov. GLib sa dá ďalej rozdeliť na niekoľko častí. 
 
-GLib Fundamentals obsahuje základné typy a ich limity, štandardné makrá, makrá na typovú konverziu a endianitu, číselné definície matematických konštánt a operácie s desatinnou čiarkou, špeciálne makrá a podporu atomických operácií. 
+\textbf{GLib Fundamentals} obsahuje základné typy a ich limity, štandardné makrá, makrá na typovú konverziu a endianitu, číselné definície matematických konštánt a operácie s desatinnou čiarkou, špeciálne makrá a podporu atomických operácií.
 
-GLib Core Application Support poskytuje správu udalostí, podporu vlákien, asynchrónne fronty, dynamické moduly, správu pamäte, vstupno-výstupné kanály a systém správ.
+\textbf{GLib Core Application Support} poskytuje správu udalostí, podporu vlákien, asynchrónne fronty, dynamické moduly, správu pamäte, vstupno-výstupné kanály a systém správ.
  
-GLib Utilities, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v RFC 3986 <\url{http://www.ietf.org/rfc/rfc3986.txt}>.}.%todo citacia 
+\textbf{GLib Utilities}, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v RFC 3986 <\url{http://www.ietf.org/rfc/rfc3986.txt}>.}.%todo citacia 
 
-GLib Data Types na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a GLib Tools.
+\textbf{GLib Data Types} na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a \textbf{GLib Tools}.
 
-\subsection{GMainLoop}O správu udalostí a signálov v programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z rôznych zdrojov ako napríklad ukazatele na súbory, časovače alebo vlastné zdroje pridané pomocou \verb|g_source_attach()|. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \verb|g_main_loop_new()|. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \verb|g_main_loop_run()|.
+\subsection{GMainLoop}
+O správu udalostí v programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z rôznych zdrojov ako napríklad ukazovatele na súbory, časovače alebo vlastné zdroje pridané pomocou \texttt{g\_source\_attach()}. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \texttt{g\_main\_loop\_new()}. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \texttt{g\_main\_loop\_run()}.
 
-V práci bolo potrebné pravidelne prekresliť časť okna. Pomocou funkcie \verb|g_timeout_add_seconds()| dôjde k vytvoreniu zdroja udalostí a jeho pripojeniu ku kontextu hlavného cyklu. Časovač sa taktiež dá vytvoriť pomocou funkcie \verb|g_timeout_add()|. Rozdiel medzi týmito funkciami je, že \verb|_seconds()| sa snaží zoskupiť zobudenia. Dosahuje tým väčšiu úsporu energie za cenu menšej presnosti.
+V práci bolo potrebné pravidelne prekresliť časť okna. Pomocou funkcie \texttt{g\_timeout\_add\_seconds()} dôjde k vytvoreniu zdroja udalostí a jeho pripojeniu ku kontextu hlavného cyklu. Časovač sa taktiež dá vytvoriť pomocou funkcie \texttt{g\_timeout\_add()}. Rozdiel medzi týmito funkciami je, že \texttt{\_seconds()} sa snaží zoskupiť zobudenia. Dosahuje tým väčšiu úsporu energie za cenu menšej presnosti.
+
 \subsection{URI} 
 URI je kompaktná sekvencia znakov, ktorá identifikuje abstraktný alebo fyzický zdroj. Používa sa na identifikáciu zdrojov v sieti Internet. URI je spojením URL\footnote{Uniform Resource Locator --- jednotný lokátor zdrojov definovaný v RFC 1738 <\url{http://www.ietf.org/rfc/rfc1738.txt}>} na určenie lokácie zdroja a URN\footnote{Uniform Resource Name --- jednotný názov zdrojov definovaný v RFC 1737 <\url{http://www.ietf.org/rfc/rfc1737.txt}>} na identifikáciu zdroja. Na obrázku \ref{obr.URI} zobrazená syntax URI je definovaná takto:
 \begin{description}
 \item[schéma] používa sa na špecifikáciu protokolu a obmedzenie syntaxe URI identifikátorov. Schémy by mali byť registrované IANA\footnote{Internet Assigned Numbers Authority <\url{http://www.iana.org/}>}.
-\item[hierarchická časť] delí sa na dve časti, a to špecifikáciu autority (začína s //), ktorá môže obsahovať informácie o užívateľovi a cestu ku zdroju.
+\item[hierarchická časť] delí sa na dve časti, a to špecifikáciu autority (začína s \uv{//}), ktorá môže obsahovať informácie o užívateľovi a cestu ku zdroju.
 \item[dotaz] nepovinná nehierarchická časť identifikátora obsahujúca dodatočné identifikačné informácie. Od cesty sa oddeľuje otáznikom.%ref wiki
 \item[fragment] nepovinná časť oddelená znakom \uv{\#} na nepriamu identifikáciu sekundárneho zdroja na základe primárneho zdroja a doplňujúcej informácie. Môže ísť o nejakú konkrétnu časť zdroja alebo o iný zdroj definovaný týmito reprezentáciami.
 \end{description}
-Na prevod medzi názvom súboru a URI poskytuje GLib makrá \\
-\verb|g_filename_from_uri| a \verb|g_filename_to_uri|.
+Na prevod medzi názvom súboru a URI poskytuje GLib makrá \texttt{g\_filename\_from\_uri()} a \texttt{g\_filename\_to\_uri()}.
 
 \begin{figure}[h]
 \begin{tiny}
@@ -153,27 +154,22 @@ GLib Object System je objektovo orientovaný framework pre jazyk C postavený na
 
 Súčasťou GLib je dynamický typový systém postavený na štruktúre GType\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gtype.html}>}. Táto štruktúra v skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkosť inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď.
 
-Knižnica GObject poskytuje základnú objektovú triedu GObject\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gobject.html}>}. GObject neumožňuje viacnásobnú dedičnosť a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použiť minimálne tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- keďže jazyk C nemá prístupové modifikátory \verb|public|, \verb|protected| alebo \verb|private|. GObject definuje určitú formu kódu tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
+Knižnica GObject poskytuje základnú objektovú triedu GObject\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gobject.html}>}. GObject neumožňuje viacnásobnú dedičnosť a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použiť minimálne tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- keďže jazyk C nemá prístupové modifikátory \texttt{public}, \texttt{protected} alebo \texttt{private}. GObject definuje určitú formu kódu tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
 Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentation-timer.h}.
-
-\begin{figure}[h]
+\begin{figure}[hb]
 \begin{tiny}
 \begin{verbatim}
 /*
  * Copyright a licenčné informácie
  */
- 
  /*Kontrola inklúzie.*/
  #ifndef _EV_PRESENTATION_TIMER_H_
  #define _EV_PRESENTATION_TIMER_H_
- 
  /*Špeciálne makro, ktoré v prípade c++ kompilátora pridá extern okolo hlavičky.*/
  G_BEGIN_DECLS
- 
  typedef struct _EvPresentationTimerClass        EvPresentationTimerClass;
  typedef struct _EvPresentationTimer             EvPresentationTimer;
  typedef struct _EvPresentationTimerPrivate      EvPresentationTimerPrivate;
- 
  /* Typové makrá */
  #define EV_TYPE_PRESENTATION_TIMER              (ev_presentation_timer_get_type ())
  #define EV_PRESENTATION_TIMER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), \\
@@ -187,21 +183,18 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
  #define EV_PRESENTATION_TIMER_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), \\
                                                   EV_TYPE_PRESENTATION_TIMER, \\
                                                   EvPresentationTimerClass))
- 
  struct _EvPresentationTimerClass
  {
          GtkDrawingAreaClass parent_class;
          /* členovia triedy */
  };
- 
- struct _EvPresentationTimer
+ struct _EvPresentationTimer 
  {
          GtkDrawingArea                  parent_instance;
          /*privátna štruktúra je potom definovaná v .c súbore*/
          EvPresentationTimerPrivate     *priv;
-         /*členovia inštancie*/
- };
- 
+         /*členovia inštancie*/ 
+};
  void                    ev_presentation_timer_set_pages         (EvPresentationTimer *ev_timer,
                                                                   guint pages);
  void                    ev_presentation_timer_set_page          (EvPresentationTimer *ev_timer,
@@ -212,9 +205,7 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
                                                                   gint time);
  GType                   ev_presentation_timer_get_type          (void);
  GtkWidget              *ev_presentation_timer_new               (void);
- 
  G_END_DECLS
- 
  #endif /*
 \end{verbatim}
 \end{tiny}
@@ -222,18 +213,17 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
 \label{ev-presentation-timer.h}
 \end{figure}
 
+Pri inicializácii triedy \texttt{ev\_presentation\_timer\_class\_init()} musí funkcia \texttt{g\_type\_class\_add\_private()} registrovať privátnu štruktúru pre triedu\cite{gprivate}. Pri alokácii objektu sú privátne štruktúry pre typy a typy ich rodičov sprístupnené sekvenčne v rovnakom pamäťovom bloku ako ich verejné štruktúry. Nakoniec pri inicializácii inštancie v tomto prípade \texttt{ev\_presentation\_timer\_init()} sa za pomoci makra \texttt{G\_TYPE\_INSTANCE\_GET\_PRIVATE()} získa ukazovateľ na privátnu dátovú štruktúru. Na implementáciu \texttt{ev\_presentation\_timer\_get\_type()} funkcie a na definíciu ukazovateľa na rodičovskú triedu sa používa makro \texttt{G\_DEFINE\_TYPE}.
 
-Pri inicializácii triedy \verb|ev_presentation_timer_class_init()| musí funkcia \verb|g_type_class_add_private()| registrovať privátnu štruktúru pre triedu\cite{gprivate}. Pri alokácii objektu sú privátne štruktúry pre typy a typy ich rodičov sprístupnené sekvenčne v rovnakom pamäťovom bloku ako ich verejné štruktúry. Nakoniec pri inicializácii inštancie v tomto prípade \verb|ev_presentation_timer_init()| sa za pomoci makra \verb|G_TYPE_INSTANCE_GET_PRIVATE()| získa ukazovateľ na privátnu dátovú štruktúru. Na implementáciu \\
-\verb|ev_presentation_timer_get_type()| funkcie a na definíciu ukazovateľa na rodičovskú triedu sa používa makro \verb|G_DEFINE_TYPE|.
-GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \verb|g_object_class_install_property()|. Pri riešení problému bolo potrebné potrebné pridať vlastnosť \verb|PROP_PAGE| do \verb|EvViewPresentation|. \verb|PROP_PAGE| odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou a nastavuje sa pomocou \verb|g_object_set_property()|. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \verb|ev_view_presentation_class_init()|. Následne pri zmene vlastnosti môže objekt vyslať \uv(nofity) signál pre danú vlastnosť pomocou funkcie \verb|g_object_notify()|.
+GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \texttt{g\_object\_class\_install\_property()}. Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
 
 Systém správ GObjectu sa skladá zo signálov a uzáver\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}>}. Uzávery sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v GNOME. Uzávery sú abstrakciou generického spätného volania pre signály. Štruktúra uzávery obsahuje tri objekty:
-\begin{description}
+\begin{itemize}
 \item ukazovateľ na vyhradenú funkciu tzv. callback.
 \item ukazovateľ na užívateľské dáta ktorý je predaný callbacku pri volaní uzávery.
 \item ukazovateľ na funkciu deštruktora uzávery.
-\end{description}
-Princíp uzáver funguje tak, že program spí v hlavnom cykle dokým sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Udalosť je reprezentovaná odoslaným signálom z objektu, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo handler), ktorý tieto signály odchytí a zavolá vyhradenú funkciu. Zjednodušená verzia pripojenia signálov prebieha pomocou volania:
+\end{itemize}
+Princíp uzáver funguje tak, že program spí v hlavnom cykle dokým sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Udalosť je reprezentovaná odoslaným signálom z objektu, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá vyhradenú funkciu. Zjednodušená verzia pripojenia signálov prebieha pomocou volania:
 \begin{verbatim}
 gulong g_signal_connect( gpointer      *objekt,
                          const gchar   *nazov,
@@ -244,12 +234,12 @@ gulong g_signal_connect( gpointer      *objekt,
 void callback_func( GtkWidget *objekt,
                     gpointer   uziv_data );
 \end{verbatim}
-A pokiaľ chceme predať callback funkcii len jeden objekt je treba použiť \verb|g_signal_connect_swapped()|.
+A pokiaľ chceme predať callback funkcii len jeden objekt je treba použiť \texttt{g\_signal\_connect\_swapped()}.
 
 \section{GTK+}
-GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikácií tzv. widgetov. Okrem programovacieho jazyka C knižnica podporuje mnoho ďalších za pomoci väzieb. GTK+ používa tieto knižnice:
+GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikácií tzv. widgetov. Okrem programovacieho jazyka C knižnica podporuje mnoho za pomoci väzieb ďalších. GTK+ používa tieto knižnice:
 \begin{description}
-\item[GLib] používa napríklad obalením hlavného cyklu do \verb|gtk_main()|.
+\item[GLib] používa napríklad obalením hlavného cyklu do \texttt{gtk\_main()}.
 \item[GObject] každý widget je potomkom objektu GObject.
 \item[GIO] VFS\footnote{Virtual File System - systém na abstrakciu nad súborovými systémami} API na abstrakciu vstupno-výstupných operácií.
 \item[cairo] na vykresľovanie widgetov.
