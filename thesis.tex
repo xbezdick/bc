@@ -17,7 +17,7 @@
 \thesiswoman{false}
 \thesisfaculty{fi}
 \thesisyear{2011}
-\thesisadvisor{RNDr. Jan Kasprzak}
+\thesisadvisor{{RNDr. Jan Kasprzak}}
 \thesislang{sk}
 
 \begin{document}
@@ -34,7 +34,7 @@ Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písan
 \end{ThesisThanks}  
 
 \begin{ThesisAbstract}
-Cieľom tejto práce je rozšíriť prehliadač dokumentov \emph{evince} o podporu prezentačného režimu na dvoch, alebo viacerých monitoroch a pridať grafický časovač do prezentačného módu prehliadača.
+Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou LaTeX Beamer triedy. Táto práca pridáva podporu viacerých monitorov a pridáva grafický časovač do prezentačného módu.
 \end{ThesisAbstract}
 
 \begin{ThesisKeyWords}
@@ -48,9 +48,9 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \tableofcontents 
  
 \chapter{Úvod}
-Prehliadač dokumentov \emph{evince}. \emph{Evince} podporuje formáty PDF, PS, DjVu, TIFF a DVI \cite{evince}. Bol vytvorený ako prepis programu GPdf, ktorý vznikol z Xpdf, s cieľom nahradiť viaceré prehliadače dokumentov v prostredí GNOME jednou jednoduchou aplikáciou. Z projektu Xpdf \emph{evince} používa knižnicu Poppler \cite{poppler} na zobrazovanie PDF súborov. Takisto ako GPdf je založený na knižnici GTK+\footnote{GIMP Toolkit - knižnica na tvorbu grafických užívateľských rozhraní.}. Jednou z vlastností \emph{evince} je prezentačný režim. Umožňuje spustiť prezentáciu aktuálneho dokumentu. V prezentačnom móde je dokument zobrazený na celej obrazovke a je možné jednotlivé slajdy prepínať.
- 
- V súčastnosti býva zvykom premietať prezentáciu na externom monitore dvoj-obrazovkovej zostavy. Takto vzniká možnosť použiť druhý monitor na podporu pre prednášajúceho v podobe podporných materiálov a časovača. \emph{Evince} však takúto funkcionalitu postráda \cite{evbug}.
+Prehliadač dokumentov \emph{evince}. \emph{Evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s cieľom nahradiť viaceré prehliadače dokumentov v GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. Z projektu Xpdf \emph{evince} používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.}. Takisto ako GPdf je založený na knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
+
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou LaTeX Beamer triedy. Ide o rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu... z vlastností \emph{evince} je prezentačný režim. Umožňuje spustiť prezentáciu aktuálneho dokumentu. V súčastnosti býva zvykom premietať prezentáciu na externom monitore dvoj-obrazovkovej zostavy. Takto vzniká možnosť použiť druhý monitor na podporu pre prednášajúceho v podobe podporných materiálov a časovača. \emph{Evince} však takúto funkcionalitu postráda \cite{evbug}.
  
  Cieľom bakalárskej práce v rámci projektu \emph{evince} bolo pridať časovač s nenápadným zobrazením priebehu prezentácie a podporu pre viacero monitorov do prezentačného módu \emph{evince} v podobe kontrolného okna na monitore prednášajúceho. V prípade časovača ide o vytvorenie ovládacieho prvku tzv. widgetu, ktorý je následne použitý v kontrolnom okne dvoj-obrazovkovej prezentácie. V tomto okne môže nastaviť predpokladanú dĺžku prezentácie. Následne sa pri prezentácii zobrazí po úvodnom slajde, na spodnej časti kontrolného okna nenápadný indikátor priebehu podobne ako je to v programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer triedy} \cite{beamer}. Trieda Beamer umožňuje priamo pri tvorbe prezentácie vytvoriť aj súbor s poznámkami pre druhý monitor.
  Cieľom práce nebolo použiť rovnaké rozlíšenie na všetkých monitoroch a ich spojenie v jednu veľkú súvislú obrazovku, tak ako to prezentuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}, ale v rámci knižníc už použitých v \emph{evince} umožniť zobrazenie v rôznom rozlíšení a zachovať tak viacplatformovosť\footnote{Prenositeľnost medzi operačnými systémami a architektúrami.} \emph{evince}.
