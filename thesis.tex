@@ -6,6 +6,7 @@
 \newcommand\uv[1]{\quotedblbase #1\textquotedblleft}%
 \usepackage{listings}
 \lstset{language=C}
+\usepackage[dvips]{graphicx}
 %\usepackage[pdftex]{graphicx}
 %\pdfcompresslevel=9
 %\usepackage{anysize}
@@ -130,21 +131,8 @@ URI je kompaktná sekvencia znakov, ktorá identifikuje abstraktný alebo fyzick
 \end{description}
 Na prevod medzi názvom súboru a URI poskytuje GLib makrá \texttt{g\_filename\_from\_uri()} a \texttt{g\_filename\_to\_uri()}.
 
-\begin{figure}[h]
-\begin{tiny}
-\begin{verbatim}
-<schéma> : <hierarchická časť> [ ? <dotaz> ] [ # <fragment> ] 
-\______/   \__________________/  \_________/   \____________/
-  |	                |                |               |
-  |	                |                |               \-----------------\
-  |                 |                \--------------------\	           |
-  |	                |-----------------------\             |	           |
-  |	             autorita                 cesta	          |	           |
- _|_   _____________|_______________  ______|______   ____|_______   __|___
-/   \ /                             \/             \ /            \ /      \
-https://xbezdick:xbezdick@example.org/cesta/k/suboru?dotaz=xbezdick#fragment
-\end{verbatim}
-\end{tiny}
+\begin{figure}[hbtp]
+\includegraphics[width=\linewidth]{./Diagram1}
 \caption{Schéma URI s príkladom.}
 \label{obr.URI}
 \end{figure}
@@ -217,13 +205,13 @@ Pri inicializácii triedy \texttt{ev\_presentation\_timer\_class\_init()} musí 
 
 GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \texttt{g\_object\_class\_install\_property()}. Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
 
-Systém správ GObjectu sa skladá zo signálov a uzáver\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}>}. Uzávery sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v GNOME. Uzávery sú abstrakciou generického spätného volania pre signály. Štruktúra uzávery obsahuje tri objekty:
+Systém správ GObjectu sa skladá zo signálov a uzáver\footnote{<\url{{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}}>}. Uzávery sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v GNOME. Uzávery sú abstrakciou generického spätného volania pre signály. Štruktúra uzávery obsahuje tri objekty:
 \begin{itemize}
 \item ukazovateľ na vyhradenú funkciu tzv. callback.
 \item ukazovateľ na užívateľské dáta ktorý je predaný callbacku pri volaní uzávery.
 \item ukazovateľ na funkciu deštruktora uzávery.
 \end{itemize}
-Princíp uzáver funguje tak, že program spí v hlavnom cykle dokým sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Udalosť je reprezentovaná odoslaným signálom z objektu, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá vyhradenú funkciu. Zjednodušená verzia pripojenia signálov prebieha pomocou volania:
+Princíp uzáver funguje tak, že program spí v hlavnom cykle pokiaľ sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Udalosť je reprezentovaná odoslaným signálom z objektu, v ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá vyhradenú funkciu. Zjednodušená verzia pripojenia signálov prebieha pomocou volania:
 \begin{verbatim}
 gulong g_signal_connect( gpointer      *objekt,
                          const gchar   *nazov,
@@ -246,7 +234,7 @@ GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikác
 \item[Pango] na prácu s textom.
 \item[ATK] toolkit na zvýšenie dostupnosti pre zrakovo, či sluchovo postihnutých ľudí.
 \item[GdkPixBuf] malá knižnica na tvorbu objektov z obrázkov.
-\item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows...
+\item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows \dots
 \end{description}
 
 \section{Cairo}
