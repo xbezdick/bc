@@ -49,9 +49,9 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \tableofcontents 
  
 \chapter{Úvod}
-Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf \emph{evince} používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a~takisto ako GPdf je založený na~knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
+Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a~takisto ako GPdf je založený na~knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na~prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám. Ten pozostáva zo sylabov, priesvitiek, ale aj poznámok. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na~obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na~prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám. Ten pozostáva zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na~obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
 \item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen~=~<left,right,bottom,top>}.
@@ -74,7 +74,7 @@ Prvá kapitola popisuje platformu GNOME a jej časti. V podkapitolách sú bliž
 
 \chapter{GNOME Platforma}
 V roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP\footnote{GNU Image Manipulation Program.}. V tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvoriť jednoduché prostredie pracovnej plochy, ktorý je postavený na GTK+. Tieto projekty zostali na seba silne naviazané a spoločne s ďalšími tvoria platformu GNOME \ref{tab.GNOME}. Ďalej sú uvedené len knižnice použité pri riešení problému.
-\begin{table}[h]
+\begin{table}[hbtp]
 \begin{center}
 \begin{scriptsize}
 \begin{tabular}{|c||c||c||c||c||c||c|}
@@ -239,17 +239,39 @@ GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikác
 \item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows \dots
 \end{description}
 Spojením týchto knižníc dodáva GTK+ flexibilitu a zjednodušuje prenositeľnosť na iné platformy.
-Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky TODOLINK a na základe tejto hierarchie sa pri tvorbe nového widgetu je dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z nových funkcií alebo len prepísania štandardných funkcií triedy.
+Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky\footnote{<\url{http://developer.gnome.org/gtk/unstable/ch01.html}>} a na základe tejto hierarchie je pri tvorbe nového widgetu dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z nových funkcií alebo len prepísania štandardných funkcií triedy.
 
 \subsection{GtkWidget}
-GtkWidget je základnou triedou pre všetky widgety, či už ide o okno, tlačidlo alebo kontajner. Táto trieda sa stará o životný cyklus, stavy a štýly widgetov.%http://developer.gnome.org/gtk/unstable/GtkWidget.html
-Životný cyklus widgetu pozostáva z vytvorenia nového objektu, pripojenia handlerov a signálov --- inicializácii (\texttt{realize}) --- presunutia widgetu na jeho pozíciu a určenie veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}), následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
+GtkWidget je základnou triedou pre všetky widgety\footnote{<\url{http://developer.gnome.org/gtk/unstable/GtkWidget.html}>}, či už ide o okno, tlačidlo alebo kontajner. Táto trieda sa stará o životný cyklus, stavy a štýly widgetov. Životný cyklus widgetu pozostáva z vytvorenia nového objektu, pripojenia handlerov a signálov --- inicializácii (\texttt{realize}) --- presunutia widgetu na jeho pozíciu a určenie veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}) a následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
 \subsection{GtkWindow}
-\subsection{packing widgets}
+Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \texttt{GtkContainer}, môže obsahovať ďalšie widgety. Pomocou tejto triedy je možné narábať podobne ako s oknom narába užívateľ. Funkcia \texttt{gtk\_window\_move()} slúži na presunutie okna na danú pozíciu. Túto operáciu má vykonať správca okien, ten ju však bude ignorovať, dokým okno nieje naozaj zobrazené. V práci bolo nutné čé najskôr presunúť kontrolné okno a okno s prezentáciou na svoje pozície. Na to však museli prebehnúť všetky udalosti a okno sa muselo zobraziť. Preto bolo nutné prejsť niekoľkými iteráciami hlavného cyklu ako je zobrazené v nasledujúcej ukážke kódu \ref{iterate}.
+\begin{figure}[hbtp]
+\begin{tiny}
+\begin{verbatim}
+	/* Wait for windows to get shown before moving them */
+	while(gtk_events_pending())
+		gtk_main_iteration();
+	/* something like http://mail.gnome.org/archives/gtk-list/2008-June/msg00061.html */
+\end{verbatim}
+\end{tiny}
+\caption{Kód na dobehnutie čakajúcich udalostí pomocou iterácie hlavného cyklu.}
+\label{iterate}
+\end{figure}
+%\subsection{packing widgets}
 \section{Cairo}
+Cairo je knižnica určená na kreslenie 2D vektorov napísaná v jazyku C a rovnako ako GTK+ je použiteľná v ostatných programovacích jazykoch za pomoci jazykových väzieb. Za pomoci caira je možno kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z týchto definícií:
+\begin{description}
+\item[Context] reprezentuje kontext v ktorom chcem kresliť. To znamená, že popisuje čo, kam a ako.
+\item[Surface] reprezentuje povrch na ktorý chceme kresliť. Môže to byť ktorýkoľvek z typov definovaných v \texttt{\_cairo\_surface\_type}.
+\item[Path] reprezentuje cestu. Pri analógii s maľovaním reprezentuje ťah štetca.
+\item[Source] reprezentuje zdroj pozostávajúci z farby, gradientu, obrázku alebo vzoru. V podobnej analógii ako v predošlom prípade reprezentuje farbu na štetci.
+\item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje naša kresba.
+\end{description}
+Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext cairo\_t, nastaví sa mu povrch a nastavenia. V prípade tejto práce išlo o kontext s povrchom widgetu. Následne pomocou funkcií cairo\_set\_source\_rgb sa vyberie farba, cairo\_set\_line\_width určí šírku čiary, cairo\_move\_to presunie na východziu pozíciu, cairo\_line\_to určí vlastnosti čiary (cestu) a funkcia cairo\_stroke následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad na kreslenie obdĺžnikov ..., vyplnenie cesty ... --- bližšie popísaných v dokumentácii LINK
 http://zetcode.com/tutorials/cairographicstutorial
 http://cairographics.org/documentation/
 \chapter{evince}
+Program \emph{evince}
 \section{shell}
 \section{libview}
 \section{metadata}
