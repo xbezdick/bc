@@ -43,32 +43,32 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \end{ThesisKeyWords}
  
 \MainMatter
-\sloppy
+%\sloppy
 %\chapter{Predhovor}
 \setcounter{tocdepth}{3}
 \tableofcontents 
  
 \chapter{Úvod}
-Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s cieľom nahradiť viaceré prehliadače dokumentov v GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z projektu Xpdf \emph{evince} používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a takisto ako GPdf je založený na knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
+Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf \emph{evince} používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a~takisto ako GPdf je založený na~knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k prezentáciám. Ten pozostáva zo sylabov, priesvitiek, ale aj poznámok. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na~prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám. Ten pozostáva zo sylabov, priesvitiek, ale aj poznámok. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na~obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
-\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second screen~=~<left,right,bottom,top>}.
+\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen~=~<left,right,bottom,top>}.
 \item[show only notes]  --- vytvorí samostatný dokument pozostávajúci len z poznámok.
 \end{description}
-Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v programoch PowerPoint alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>}, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy, alebo poznámky prednášajúceho. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
+Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v programoch PowerPoint alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>}, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy, alebo poznámky prednášajúceho. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na~ňu prezentáciu tak, ako to popisuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
 \\
 \\
 Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
 \item Upraviť knižnicu Poppler a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
-\item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
+\item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na~jednom monitore a prezentácia na~druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
 \item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
-Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v diskusii pod hlásením o chybe \cite{evbug}.
+Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v~diskusii pod hlásením o chybe \cite{evbug}.
 
-Cieľom bakalárskej práce v rámci projektu \emph{evince} bolo pridať časovač s nenápadným zobrazením priebehu prezentácie a podporu pre viacero monitorov do prezentačného módu \emph{evince} v podobe kontrolného okna na monitore prednášajúceho. V prípade časovača ide o vytvorenie ovládacieho prvku tzv. widgetu, ktorý je následne použitý v kontrolnom okne dvoj-obrazovkovej prezentácie. V tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde, na spodnej časti kontrolného okna nenápadný indikátor priebehu podobne ako je to v programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer} triedy \cite{beamer}. Ide však len o prezentácie s poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu.
+Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať časovač s nenápadným zobrazením priebehu prezentácie a podporu pre viacero monitorov do prezentačného módu \emph{evince} v podobe kontrolného okna na monitore prednášajúceho. V prípade časovača ide o vytvorenie ovládacieho prvku tzv. widgetu, ktorý je následne použitý v kontrolnom okne dvoj-obrazovkovej prezentácie. V tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde, na spodnej časti kontrolného okna nenápadný indikátor priebehu podobne ako je to v programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer} triedy \cite{beamer}. Ide však len o prezentácie s poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu.
 
 Prvá kapitola popisuje platformu GNOME a jej časti. V podkapitolách sú bližšie popísané použité časti. V druhej kapitole je popísaný program \emph{evince} a jeho úprava. A na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
@@ -238,10 +238,12 @@ GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikác
 \item[GdkPixBuf] malá knižnica na tvorbu objektov z obrázkov.
 \item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows \dots
 \end{description}
-Spojením týchto knižníc dodáva GTK+ flexibility a zjednodušuje prenositeľnosť na iné platformy.
-
+Spojením týchto knižníc dodáva GTK+ flexibilitu a zjednodušuje prenositeľnosť na iné platformy.
+Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky TODOLINK a na základe tejto hierarchie sa pri tvorbe nového widgetu je dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z nových funkcií alebo len prepísania štandardných funkcií triedy.
 
 \subsection{GtkWidget}
+GtkWidget je základnou triedou pre všetky widgety, či už ide o okno, tlačidlo alebo kontajner. Táto trieda sa stará o životný cyklus, stavy a štýly widgetov.%http://developer.gnome.org/gtk/unstable/GtkWidget.html
+Životný cyklus widgetu pozostáva z vytvorenia nového objektu, pripojenia handlerov a signálov --- inicializácii (\texttt{realize}) --- presunutia widgetu na jeho pozíciu a určenie veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}), následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
 \subsection{GtkWindow}
 \subsection{packing widgets}
 \section{Cairo}
