@@ -1,7 +1,8 @@
 % $Header: /cvsroot/latex-beamer/latex-beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 1.6 2004/10/07 20:53:08 tantau Exp $
 
 \documentclass{beamer}
-
+\setbeameroption{show notes}
+\newcommand\uv[1]{\quotedblbase #1\textquotedblleft}%
 % This file is a solution template for:
 
 % - Talk at a conference/colloquium.
@@ -137,14 +138,14 @@
 \subsection{Prezentácie na viacerých monitoroch}
 
 \begin{frame}
-  \frametitle{Momentálny stav.}
+  \frametitle{Momentálny stav a motivácia}
 %\framesubtitle{}
   % - A title should summarize the slide in an understandable fashion
   %   for anyone how does not follow everything on the slide itself.
 
   \begin{itemize}
   \item
-    Mnoho softvéru na tvorbu prezentácií a mnoho formátov. 
+    Veľa programov na tvorbu prezentácií a ešte viac formátov. 
     \pause
   \item
     LaTeX Beamer na tvorbu prezentácií vo formáte PDF. 
@@ -159,117 +160,66 @@
 
 \subsection{Evince}
 \begin{frame}
-\emph{Evince} vznikol ako projekt zjednocujúci prehliadače dokumentov v prostredí GNOME do jednej jednoduchej aplikácie. Pozostáva z:
-    \begin{itemize}
-     \item \texttt{shell} --- jadro
-     \item \texttt{libview} --- 
-    \end{itemize}
+\frametitle{Prečo evince?}
+Ide o pravdepodobne najpoužívanejší prehliadač PDF dokumentov s otvoreným kódom.
+\end{frame}
+\begin{frame}
+\emph{Evince} vznikol ako projekt zjednocujúci prehliadače dokumentov v prostredí GNOME do jednej aplikácie.
+Pozostáva z:
+
+\begin{description}
+\item [backend] --- prípojné body pre knižnice na prácu s jednotlivými formátmi.
+\item [libdocument] --- slúži na abstrakciu nad dokumentmi.
+\item [libview] --- knižnica určená na samotné zobrazenie.
+\item [shell] --- samotné jadro programu.
+\end{description}
+
 \end{frame}
 
-\subsection{Previous Work}
-
+\section{Práca}
+\subsection{Úprava programu evince}
 \begin{frame}
-  \frametitle{Make Titles Informative.}
+Práca pozostávala z:
+\begin{itemize}
+\item Vytvorenia kontrolného okna.
+\item Určenia geometrie monitorov a presunutia okien.
+\item Vytvorenia ovládacieho prvku (tzv. widget) časovača a jeho umiestnenia do kontrolného okna.
+\end{itemize}
 \end{frame}
 
+\section{Ukážka}
+
+\subsection{Výsledok?}
+
 \begin{frame}
-  \frametitle{Make Titles Informative.}
+\frametitle{Praktická ukážka}
+\note{
+\begin{description}
+\item Toto sú poznámky!
+\item Na ľavo je \uv{sidebar} s náhľadmi.
+\item Dole je časovač --- ako vidíte dochádza mi čas.
+\end{description}}
+  By mal vyzerať asi takto\ldots
 \end{frame}
 
 
  
-\section{Our Results/Contribution}
-
-\subsection{Main Results}
-
+\section{Zhrnutie}
+\newcount\opaqueness
+\newdimen\offset
 \begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
 
-\begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
-
-
-\subsection{Basic Ideas for Proofs/Implementation}
-
-\begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Make Titles Informative.}
-\end{frame}
-
-
- 
-\section*{Summary}
-
-\begin{frame}
-  \frametitle<presentation>{Summary}
-
-  % Keep the summary *very short*.
-  \begin{itemize}
-  \item
-    The \alert{first main message} of your talk in one or two lines.
-  \item
-    The \alert{second main message} of your talk in one or two lines.
-  \item
-    Perhaps a \alert{third message}, but not more than that.
-  \end{itemize}
-  
-  % The following outlook is optional.
-  \vskip0pt plus.5fill
-  \begin{itemize}
-  \item
-    Outlook
-    \begin{itemize}
-    \item
-      Something you haven't solved.
-    \item
-      Something else you haven't solved.
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-
-
-% All of the following is optional and typically not needed. 
-\appendix
-\section<presentation>*{\appendixname}
-\subsection<presentation>*{For Further Reading}
-
-\begin{frame}[allowframebreaks]
-  \frametitle<presentation>{For Further Reading}
-    
-  \begin{thebibliography}{10}
-    
-  \beamertemplatebookbibitems
-  % Start with overview books.
-
-  \bibitem{Author1990}
-    A.~Author.
-    \newblock {\em Handbook of Everything}.
-    \newblock Some Press, 1990.
- 
-    
-  \beamertemplatearticlebibitems
-  % Followed by interesting articles. Keep the list short. 
-
-  \bibitem{Someone2000}
-    S.~Someone.
-    \newblock On this and that.
-    \newblock {\em Journal of This and That}, 2(1):50--100,
-    2000.
-  \end{thebibliography}
+  \frametitle<presentation>{Zhrnutie}
+\animate<2-5>
+% Actual animation values. Try <1-31>
+\begin{itemize}
+\item[]
+\animatevalue<1-5>{\opaqueness}{0}{100}%
+\animatevalue<1-5>{\offset}{6cm}{0cm}%
+\begin{colormixin}{\the\opaqueness!averagebackgroundcolor}
+\hspace{\offset} Aj animácie fungujú. {\color{olive} Ďakujem}!
+\end{colormixin}
+\end{itemize}
 \end{frame}
 
 \end{document}
