@@ -1,101 +1,31 @@
-% $Header: /cvsroot/latex-beamer/latex-beamer/solutions/conference-talks/conference-ornate-20min.en.tex,v 1.6 2004/10/07 20:53:08 tantau Exp $
-
 \documentclass{beamer}
-\setbeameroption{hide  notes}
+\setbeameroption{hide notes}
 \newcommand\uv[1]{\quotedblbase #1\textquotedblleft}%
-% This file is a solution template for:
-
-% - Talk at a conference/colloquium.
-% - Talk length is about 20min.
-% - Style is ornate.
-
-
-
-% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
-%
-% In principle, this file can be redistributed and/or modified under
-% the terms of the GNU Public License, version 2.
-%
-% However, this file is supposed to be a template to be modified
-% for your own needs. For this reason, if you use this file as a
-% template and not specifically distribute it as part of a another
-% package/program, I grant the extra permission to freely copy and
-% modify this file as you see fit and even to delete this copyright
-% notice. 
-
 
 \mode<presentation>
 {
   \usetheme{Warsaw}
-  % or ...
-
   \setbeamercovered{transparent}
-  % or whatever (possibly just delete it)
 }
-
-
-%\usepackage[english]{babel}
 \usepackage[slovak]{babel}
-% or whatever
-
 \usepackage[utf8]{inputenc}
-% or whatever
-
 \usepackage{times}
 \usepackage[T1]{fontenc}
-% Or whatever. Note that the encoding and the font should match. If T1
-% does not look nice, try deleting the line with the fontenc.
-
-
-\title[Prezentačný mód evince] % (optional, use only with long paper titles)
+\title[Prezentačný mód evince]
 {Prezentačný režim pre PDF prehliadač \emph{evince}}
-
-\author[Bezdička L.] % (optional, use only with lots of authors)
-{Lukáš Bezdička\inst{1}}
-% - Give the names in the same order as the appear in the paper.
-% - Use the \inst{?} command only if the authors have different
-%   affiliation.
-
-\institute[FI MUNI] % (optional, but mostly needed)
+\author[Bezdička L.]
+{Lukáš Bezdička}
+\institute[FI MUNI]
 {
-  \inst{1}%
-  Fakulta Informatiky\\
-  Masarykova Univerzita
+  Fakulta informatiky\\
+  Masarykova univerzita
 }
-% - Use the \inst command only if there are several affiliations.
-% - Keep it simple, no one is interested in your street address.
-
-\date[Jar 2011] % (optional, should be abbreviation of conference name)
-{Obhajoba úvodu k bakalárskej práci}
-% - Either use conference name or its abbreviation.
-% - Not really informative to the audience, more for people (including
-%   yourself) who are reading the slides online
-
+\date[Jar 2011]
+{Úvod k bakalárskej práci}
 \subject{Prezentačný mód evince}
-% This is only inserted into the PDF information catalog. Can be left
-% out. 
 
-
-
-% If you have a file called "university-logo-filename.xxx", where xxx
-% is a graphic format that can be processed by latex or pdflatex,
-% resp., then you can add a logo as follows:
-
-% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
-% \logo{\pgfuseimage{university-logo}}
-
-
-
-% Delete this, if you do not want the table of contents to pop up at
-% the beginning of each subsection:
-%\AtBeginSubsection[]
-%{
-%  \begin{frame}<beamer>
-%    \frametitle{Outline}
-%    \tableofcontents[currentsection,currentsubsection]
-%  \end{frame}
-%}
-
+\pgfdeclareimage[height=0.5cm]{university-logo}{fi-logo}
+\logo{\pgfuseimage{university-logo}}
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command: 
@@ -107,41 +37,16 @@
 
 \begin{frame}
   \titlepage
+  \note{Pekne sa pozdrav napriklad mile damy a pani. NEPOZERAJ SA NA POZNAMKY}
 \end{frame}
-
-%\begin{frame}
-%  \frametitle{Outline}
-%  \tableofcontents
-%  % You might wish to add the option [pausesections]
-%\end{frame}
-
-
-% Structuring a talk is a difficult task and the following structure
-% may not be suitable. Here are some rules that apply for this
-% solution: 
-
-% - Exactly two or three sections (other than the summary).
-% - At *most* three subsections per section.
-% - Talk about 30s to 2min per frame. So there should be between about
-%   15 and 30 frames, all told.
-
-% - A conference audience is likely to know very little of what you
-%   are going to talk about. So *simplify*!
-% - In a 20min talk, getting the main ideas across is hard
-%   enough. Leave out details, even if it means being less precise than
-%   you think necessary.
-% - If you omit details that are vital to the proof/implementation,
-%   just say so once. Everybody will be happy with that.
 
 \section{Motivácia}
 
 \subsection{Prezentácie na viacerých monitoroch}
 
 \begin{frame}
+  \note{Hlavne klud}
   \frametitle{Momentálny stav a motivácia}
-%\framesubtitle{}
-  % - A title should summarize the slide in an understandable fashion
-  %   for anyone how does not follow everything on the slide itself.
 
   \begin{itemize}
   \item
@@ -161,17 +66,19 @@
 \subsection{Evince}
 \begin{frame}
 \frametitle{Prečo evince?}
+\note{preco nie}
 Ide o pravdepodobne najpoužívanejší prehliadač PDF dokumentov s otvoreným kódom.
 \end{frame}
 \begin{frame}
+\note{neobkecavat nezasekavat sa}
 \emph{Evince} vznikol ako projekt zjednocujúci prehliadače dokumentov v prostredí GNOME do jednej aplikácie.
 Pozostáva z:
 
 \begin{description}
 \item [backend] --- prípojné body pre knižnice na prácu s jednotlivými formátmi.
 \item [libdocument] --- slúži na abstrakciu nad dokumentmi.
-\item [libview] --- knižnica určená na samotné zobrazenie.
-\item [shell] --- samotné jadro programu.
+\item [libview] --- knižnica určená na zobrazenie.
+\item [shell] --- jadro programu.
 \end{description}
 
 \end{frame}
@@ -179,11 +86,12 @@ Pozostáva z:
 \section{Práca}
 \subsection{Úprava programu evince}
 \begin{frame}
-Práca pozostávala z:
+\note{widget! daj si pozor}
+Moja práca:
 \begin{itemize}
-\item Vytvorenia kontrolného okna.
-\item Určenia geometrie monitorov a presunutia okien.
-\item Vytvorenia ovládacieho prvku (tzv. widget) časovača a jeho umiestnenia do kontrolného okna.
+\item Vytvorenie kontrolného okna.
+\item Určenie geometrie monitorov a presunutie okien.
+\item Vytvorenie ovládacieho prvku (tzv. widget) časovača a jeho umiestnenie do kontrolného okna.
 \end{itemize}
 \end{frame}
 
@@ -197,14 +105,14 @@ Práca pozostávala z:
 \begin{description}
 \item Toto sú poznámky!
 \item Na ľavo je \uv{sidebar} s náhľadmi.
-\item Dole je časovač --- ako vidíte dochádza mi čas.
+\item Dole je časovač --- ako vidíte, dochádza mi čas.
 \end{description}}
   By mal vyzerať asi takto\ldots
 \end{frame}
 
 
  
-\section{Zhrnutie}
+\section{Záver}
 \newcount\opaqueness
 \newdimen\offset
 \begin{frame}

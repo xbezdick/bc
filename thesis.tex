@@ -7,8 +7,8 @@
 \usepackage{listings}
 \lstset{language=C}
 %\usepackage[dvips]{graphicx}
-\usepackage{pdfpages}
-\usepackage[pdftex]{color}
+%\usepackage{pdfpages}
+%\usepackage[pdftex]{color}
 \usepackage{graphicx}
 %\pdfcompresslevel=9
 %\usepackage{anysize}
@@ -28,7 +28,7 @@
 \ThesisTitlePage
 
 %\includegraphics[bb=0 0 209 300,width=\textwidth,height=\textheight]{zadani.pdf}
-\includepdf{zadani.pdf}
+\includegraphics[height=\textheight]{zadani.pdf}
 %\begin{figure}[hbtp]
 %\includegraphics{zadani}
 %\end{figure}
@@ -58,31 +58,33 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \tableofcontents 
  
 \chapter{Úvod}
-Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME --- prostredí pracovnej plochy --- jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a~takisto ako GPdf je založený na~knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
+Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint\footnote{text} a jeho formát PPT, alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>} a jeho formát ODP\footnote{Open Document Presentation.}. Najtypickejší spôsob prezentácie v dnešnej dobe je prezentácia pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z formátov používaných na prezentácie je aj formát PDF. Väčšina programov na prácu s týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s otvoreným zdrojovým kódom \emph{evince}.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na~prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám. Ten pozostáva zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na~obrazovke notebooku. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O zobrazení poznámok sa rozhoduje v preambule dokumentu pomocou \verb|\setbeameroption{}| s týmito nastaveniami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
-\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen~=~<left,right,bottom,top>}.
+\item[show notes] --- poznámky sú zľava pripojené k jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen = <left,right,bottom,top>}.
 \item[show only notes]  --- vytvorí samostatný dokument pozostávajúci len z poznámok.
 \end{description}
-Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v programoch PowerPoint alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>}, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy, alebo poznámky prednášajúceho. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na~ňu prezentáciu tak, ako to popisuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
+
+Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR} --- rozšírenia \emph{X Window} systému --- je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
 \\
 \\
 Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
-\item Upraviť knižnicu Poppler a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
-\item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na~jednom monitore a prezentácia na~druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
+\item Upraviť knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
+\item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
 \item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
-Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v~diskusii pod hlásením o chybe \cite{evbug}.
 
-Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať časovač s nenápadným zobrazením priebehu prezentácie a podporu pre viacero monitorov do prezentačného módu \emph{evince} v podobe kontrolného okna na monitore prednášajúceho. V prípade časovača ide o vytvorenie ovládacieho prvku tzv. widgetu, ktorý je následne použitý v kontrolnom okne dvoj-obrazovkovej prezentácie. V tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde, na spodnej časti kontrolného okna nenápadný indikátor priebehu podobne ako je to v programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer} triedy \cite{beamer}. Ide však len o prezentácie s poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu.
+Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v diskusii pod hlásením o chybe \cite{evbug}.
+
+Cieľom bakalárskej práce v rámci projektu \emph{evince} bolo pridať podporu pre viacero monitorov do prezentačného módu \emph{evince} v podobe kontrolného okna na monitore prednášajúceho a časovač s nenápadným zobrazením priebehu prezentácie.  V prípade časovača ide o vytvorenie ovládacieho prvku tzv. widgetu, ktorý je následne použitý v kontrolnom okne dvoj-obrazovkovej prezentácie. V tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer} triedy \cite{beamer}. Ide však len o prezentácie s poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
 
 Druhá kapitola popisuje platformu GNOME a jej časti. V podkapitolách sú bližšie popísané použité časti. V tretej kapitole je popísaný program \emph{evince} a jeho úprava. Na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
 \chapter{GNOME Platforma}
-V roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP\footnote{GNU Image Manipulation Program.}. V tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvoriť jednoduché prostredie pracovnej plochy, ktorý je postavený na GTK+. Tieto projekty zostali na seba silne naviazané a spoločne s ďalšími tvoria platformu GNOME \ref{tab.GNOME}. Ďalej sú uvedené len knižnice použité pri riešení problému.
+V roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP\footnote{GNU Image Manipulation Program.}. V tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvoriť jednoduché prostredie pracovnej plochy, ktorý je postavený na GTK+. Tieto projekty zostali na seba silne naviazané a spoločne s ďalšími tvoria platformu GNOME \ref{tab.GNOME}. Ďalej sú uvedené len knižnice použité v tejto práci a popis riešenia špecifických problémov v rámci nich.
 \begin{table}[hbtp]
 \begin{center}
 \begin{scriptsize}
@@ -123,7 +125,7 @@ Obecná knižnica funkcií GLib vznikla oddelením kódu ktorý nebol priamo šp
 
 \textbf{GLib Core Application Support} poskytuje správu udalostí, podporu vlákien, asynchrónne fronty, dynamické moduly, správu pamäte, vstupno-výstupné kanály a systém správ.
  
-\textbf{GLib Utilities}, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v RFC 3986 <\url{http://www.ietf.org/rfc/rfc3986.txt}>.}.%todo citacia 
+\textbf{GLib Utilities}, v ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v RFC 3986 <\url{http://www.ietf.org/rfc/rfc3986.txt}>.}.
 
 \textbf{GLib Data Types} na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a \textbf{GLib Tools}.
 
@@ -142,14 +144,14 @@ URI je kompaktná sekvencia znakov, ktorá identifikuje abstraktný alebo fyzick
 \end{description}
 Na prevod medzi názvom súboru a URI poskytuje GLib makrá \texttt{g\_filename\_from\_uri()} a \texttt{g\_filename\_to\_uri()}.
 
-\begin{figure}[hbtp]
-%\includegraphics[width=\linewidth]{./Diagram1}
+\begin{figure}[hb]
+\includegraphics[width=\linewidth]{Diagram1.pdf}
 \caption{Schéma URI s príkladom.}
 \label{obr.URI}
 \end{figure}
 
 \section{GObject}
-GLib Object System je objektovo orientovaný framework pre jazyk C postavený na GLib. GObject je navrhnutý tak, aby bolo možné exportovať jeho C-API\footnote{API - rozhranie pre programovanie aplikácií.} do ostatných jazykov za pomoci tzv. lepiaceho kódu\footnote{<\url{http://developer.gnome.org/gobject/stable/ch01s02.html}>}.
+GLib Object System je objektovo orientovaný framework pre jazyk C postavený na GLib. GObject je navrhnutý tak, aby bolo možné exportovať jeho C-API\footnote{API --- rozhranie pre programovanie aplikácií.} do ostatných jazykov za pomoci tzv. lepiaceho kódu\footnote{<\url{http://developer.gnome.org/gobject/stable/ch01s02.html}>}.
 
 Súčasťou GLib je dynamický typový systém postavený na štruktúre GType\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gtype.html}>}. Táto štruktúra v skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkosť inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď.
 
@@ -266,9 +268,11 @@ Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \te
 \caption{Kód na dobehnutie čakajúcich udalostí pomocou iterácie hlavného cyklu.}
 \label{iterate}
 \end{figure}
+%TODO FINISH ME
 %\subsection{packing widgets}
 \section{Cairo}
-Cairo je knižnica určená na kreslenie 2D vektorov napísaná v jazyku C a rovnako ako GTK+ je použiteľná v ostatných programovacích jazykoch za pomoci jazykových väzieb. Za pomoci caira je možno kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z týchto definícií:
+%TODO FIX ME
+Cairo je knižnica určená na kreslenie 2D vektorov napísaná v jazyku C a rovnako ako GTK+ je použiteľná v ostatných programovacích jazykoch za pomoci jazykových väzieb. Pomocou caira je možné kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z týchto definícií:
 \begin{description}
 \item[Context] reprezentuje kontext v ktorom chcem kresliť. To znamená, že popisuje čo, kam a ako.
 \item[Surface] reprezentuje povrch na ktorý chceme kresliť. Môže to byť ktorýkoľvek z typov definovaných v \texttt{\_cairo\_surface\_type}.
@@ -276,13 +280,14 @@ Cairo je knižnica určená na kreslenie 2D vektorov napísaná v jazyku C a rov
 \item[Source] reprezentuje zdroj pozostávajúci z farby, gradientu, obrázku alebo vzoru. V podobnej analógii ako v predošlom prípade reprezentuje farbu na štetci.
 \item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje naša kresba.
 \end{description}
-Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext cairo\_t, nastaví sa mu povrch a nastavenia. V prípade tejto práce išlo o kontext s povrchom widgetu. Následne pomocou funkcií cairo\_set\_source\_rgb sa vyberie farba, cairo\_set\_line\_width určí šírku čiary, cairo\_move\_to presunie na východziu pozíciu, cairo\_line\_to určí vlastnosti čiary (cestu) a funkcia cairo\_stroke následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad na kreslenie obdĺžnikov ..., vyplnenie cesty ... --- bližšie popísaných v dokumentácii LINK
-http://zetcode.com/tutorials/cairographicstutorial
-http://cairographics.org/documentation/
+Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V prípade tejto práce išlo o kontext s povrchom widgetu, ktorý bol špeciálne z tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcií \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, \texttt{cairo\_set\_line\_width()} určí šírku čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti čiary (cestu) a funkcia \texttt{cairo\_stroke()} následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad na kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v dokumentácii \cite{cairodoc}.
 \chapter{evince}
-Program \emph{evince}
+Prehliadač dokumentov \emph{evince} podporuje formáty PDF\footnote{Portable Document Format.}, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s cieľom nahradiť viaceré prehliadače dokumentov v GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+\footnote{GIMP Toolkit --- knižnica na tvorbu grafických užívateľských rozhraní.}.
+
 \section{shell}
+Jadro evince
 \section{libview}
+
 \section{metadata}
 \chapter{Zaver}
 

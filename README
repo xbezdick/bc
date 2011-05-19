@@ -5,4 +5,6 @@ Prohlížeč PDF dokumentů evince (http://projects.gnome.org/evince/) může b�
     vestavěný časovač, ukazující nenápadným způsobem pozici v přednášce a pozici v alokovaném čase (asi nejpoužitelnější co jsem viděl měl program MagicPoint - http://member.wide.ad.jp/wg/mgp/).
     podpora dvouobrazovkového režimu, kdy na projektoru by se ukazovala jen aktuální stránka, zatímco na displeji laptopu by byly vidět i náhledy okolních stránek, případně i autorovy soukromé poznámky, a třeba i časovač. O více obrazovkách se hovoří např. tady: https://bugzilla.gnome.org/show_bug.cgi?id=454731
 
-Prozkoumejte možnosti vylepšené podpory prezentací v evince, navrhněte vhodné řešení, implementujte je a snažte se o jejich začlenění do oficiálních zdrojů evince. 
+Prozkoumejte možnosti vylepšené podpory prezentací v evince, navrhněte vhodné řešení, implementujte je a snažte se o jejich začlenění do oficiálních zdrojů evince.
+
+fithesis a loga su z http://www.fi.muni.cz/~xpavlov/ 
