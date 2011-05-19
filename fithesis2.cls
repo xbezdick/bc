@@ -360,7 +360,7 @@ Advisor:
  {\filogo SL}\\[0.4in]
 % else logo defined in \facultylogo command will be used
 \else
- \includegraphics[width=40mm]{\facultylogo}\\[0.4in]
+% \includegraphics[width=40mm]{\facultylogo}\\[0.4in]
 \fi
 
 % typesets thesis subtitle and the name of author
