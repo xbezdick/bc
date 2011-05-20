@@ -253,7 +253,6 @@ GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikác
 \end{description}
 Spojením týchto knižníc dodáva GTK+ flexibilitu a zjednodušuje prenositeľnosť na iné platformy.
 Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky\footnote{<\url{http://developer.gnome.org/gtk/unstable/ch01.html}>} a na základe tejto hierarchie je pri tvorbe nového widgetu dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z~nových funkcií alebo len prepísania štandardných funkcií triedy.
-
 \subsection{GtkWidget}
 GtkWidget je základnou triedou pre všetky widgety\footnote{<\url{http://developer.gnome.org/gtk/unstable/GtkWidget.html}>}, či už ide o~okno, tlačidlo alebo kontajner. Táto trieda sa stará o~životný cyklus, stavy a štýly widgetov. Životný cyklus widgetu pozostáva z~vytvorenia nového objektu, pripojenia handlerov a signálov --- inicializácii (\texttt{realize}) --- presunutia widgetu na jeho pozíciu a určenie veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}) a následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
 \subsection{GtkWindow}
@@ -276,22 +275,43 @@ Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \te
 %TODO FIX ME
 Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rovnako ako GTK+ je použiteľná v~ostatných programovacích jazykoch za pomoci jazykových väzieb. Pomocou caira je možné kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z~týchto definícií:
 \begin{description}
-\item[Context] reprezentuje kontext v~ktorom chcem kresliť. To znamená, že popisuje čo, kam a ako.
+\item[Context] reprezentuje kontext v~ktorom chceme kresliť. To znamená, že popisuje čo, kam a ako.
 \item[Surface] reprezentuje povrch na ktorý chceme kresliť. Môže to byť ktorýkoľvek z~typov definovaných v~\texttt{\_cairo\_surface\_type}.
 \item[Path] reprezentuje cestu. Pri analógii s~maľovaním reprezentuje ťah štetca.
-\item[Source] reprezentuje zdroj pozostávajúci z~farby, gradientu, obrázku alebo vzoru. V~podobnej analógii ako v~predošlom prípade reprezentuje farbu na štetci.
-\item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje naša kresba.
+\item[Source] reprezentuje zdroj pozostávajúci z~farby, gradientu, obrázku alebo vzoru. V~podobnej analógii ako v~predošlom prípade reprezentuje farbu štetca.
+\item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje kresba.
 \end{description}
-Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcií \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, \texttt{cairo\_set\_line\_width()} určí šírku čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti čiary (cestu) a funkcia \texttt{cairo\_stroke()} následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad na kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii \cite{cairodoc}.
+Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcií \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, \texttt{cairo\_set\_line\_width()} určí šírku čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti čiary (cestu) a funkcia \texttt{cairo\_stroke()} následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii projektu\cite{cairodoc}.
 \chapter{evince}
 Prehliadač dokumentov \emph{evince} podporuje formáty PDF, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+. Program \emph{evince} je štruktorovaný do:
 \begin{description}
 \item[backend] V~backende sa nachádzajú knižnice fungujúce ako prípojné body pre knižnice na prácu s~jednotlivými formátmi. Napríklad knižnica libpdfdocument slúži na pripojenie knižnice Poppler.
-\item[libdocument] Knižnica libdocument obsahuje triedu EvDocument slúžiacu na zjednotenie operácií nad dokumentami a oddelenie špecifických operácií pre jednotlivé formáty abstrakciou nad nimi.
-\item[libview] 
-\item[shell] 
+\item[libdocument] Knižnica libdocument obsahuje triedu EvDocument slúžiacu na zjednotenie operácií s dokumentami a oddelenie špecifických operácií pre jednotlivé formáty abstrakciou nad nimi.
+\item[libview] Ide o knižnicu na prácu s náhľadmi na dokument starajúcu sa o zobrazenie dokumentu. Obsahuje triedy EvDocumentModel a EvView zjednocujúce prácu s náhľadmi ale aj triedu EvViewPresentation reprezentujúcu prezentačný mód \emph{evince}.
+\item[shell] Tvorí jadro programu \emph{evince}, obsahuje väčšinu stavebných widgetov programu. V jadre je definovaná trieda okna programu EvWindow, bočný panel EvSidebar, metadáta EvMetadata a ďalšie.
 \end{description}
-Práca pozostávala z~vytvorenia EvDSCWindow triedy (potomoka GtkWindow), pomocou ktorej je vytvorené kontrolné okno v~EvWindow vo funkci ev\_window\_run\_presentation. po vytvorení kontrolného okna je potreba predať mu ukazovatele na pôvodné okno, aktuálny dokument, pohľad prezentácie a metadáta. EvDSCWindow následne nastaví dokumentmodel, pripojí signály destroy a notify::page pre pohľad prezentácie a notify::page pre dokument model na callbacky. destroy signál je napojený na funkciu GTK gtk\_widget\_destroy ktorá BLAH. Signály notify::page slúžia na synchronizovanie strán medzi jednotlivými náhľadmi. Kontrolné okno obsahuje ...
+\subsection{metadata}
+Program evince plne využíva skoro celý rozsah platformy GNOME, jednou z jej ešte nepopísaných častí v tejto práci je GIO. Ide o knižnicu pre vstupno-výstupné operácie GVFS --- virtuálneho súborového systému GNOME --- poskytujúcu aj možnosť ukladať si metadáta. Ide o dáta o dátach používané programami na uloženie špecifických nastavení pre jednotlivé súbory. Napríklad program evince si takto ukladá informácie o veľkosti okna, aktuálnej strane atď. viac v ukážke \cite{meta}.
+\begin{figure}
+\begin{tiny}
+\begin{verbatim}
+$ gvfs-info -a "metadata::*" gtk-tut.pdf 
+attributes:
+  metadata::evince::page: 2
+  metadata::evince::sidebar_size: 170
+  metadata::evince::sidebar_visibility: 1
+  metadata::evince::window_height: 751
+  metadata::evince::window_maximized: 1
+  metadata::evince::window_width: 1280
+  metadata::evince::window_x: 0
+  metadata::evince::window_y: 49
+\end{verbatim}
+\end{tiny}
+\caption{Metadáta o súbore \verb|gtk-tut.pdf| vypísané pomocou \verb|gtk-info|.}
+\label{meta}
+\end{figure}
+\chapter{Úprava programu \emph{evince}}
+Práca pozostávala z~vytvorenia \texttt{EvDSCWindow} triedy (potomoka \texttt{GtkWindow}), pomocou ktorej je vytvorené kontrolné okno v~\texttt{EvWindow} vo funkci \texttt{ev\_window\_run\_presentation()}. Kontrolné okno pozostáva z náhľadu na dokument Po vytvorení kontrolného okna je mu nutné predať ukazovatele na pôvodné okno, aktuálny dokument, pohľad prezentácie a metadáta pomocou funkcie \texttt{ev\_dscwindow\_set\_presentation()}. EvDSCWindow následne nastaví \texttt{EvDocumentModel} náhľadu na poznámky a sidebaru, pripojí signály destroy a notify::page pre pohľad prezentácie a notify::page pre dokument model na callbacky. destroy signál je napojený na funkciu GTK gtk\_widget\_destroy ktorá BLAH. Signály notify::page slúžia na synchronizovanie strán medzi jednotlivými náhľadmi. Kontrolné okno obsahuje ...
 
 \chapter{Zaver}
 
