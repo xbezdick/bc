@@ -2,7 +2,8 @@
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[plainpages=false,pdfpagelabels,unicode,breaklinks]{hyperref}
+\usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
+%breaklinks
 
 \newcommand\uv[1]{\quotedblbase #1\textquotedblleft}
 %\usepackage{listings}
@@ -133,7 +134,7 @@ Obecná knižnica funkcií GLib vznikla oddelením kódu ktorý nebol priamo šp
 \textbf{GLib Data Types} na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a \textbf{GLib Tools}.
 
 \subsection{GMainLoop}
-O~správu udalostí v~programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z~rôznych zdrojov ako napríklad ukazovatele na súbory, časovače alebo vlastné zdroje pridané pomocou \texttt{g\_source\_attach()}. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v~prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \texttt{g\_main\_loop\_new()}. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \texttt{g\_main\_loop\_run()}.
+O~správu udalostí v~programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z~rôznych zdrojov ako napríklad ukazovatele na súbory, časovače alebo vlastné zdroje pridané pomocou \texttt{g\_source}\texttt{\_attach()}. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v~prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \texttt{g\_main\_loop\_new()}. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \texttt{g\_main\_loop\_run()}.
 
 V~práci bolo potrebné pravidelne prekresliť časť okna. Pomocou funkcie \texttt{g\_timeout\_add\_seconds()} dôjde k~vytvoreniu zdroja udalostí a jeho pripojeniu ku kontextu hlavného cyklu. Časovač sa taktiež dá vytvoriť pomocou funkcie \texttt{g\_timeout\_add()}. Rozdiel medzi týmito funkciami je, že \texttt{\_seconds()} sa snaží zoskupiť zobudenia. Dosahuje tým väčšiu úsporu energie za cenu menšej presnosti.
 
@@ -158,9 +159,9 @@ GLib Object System je objektovo orientovaný framework pre jazyk C postavený na
 
 Súčasťou GLib je dynamický typový systém postavený na štruktúre GType\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gtype.html}>}. Táto štruktúra v~skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkosť inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď.
 
-Knižnica GObject poskytuje základnú objektovú triedu GObject\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gobject.html}>}. GObject neumožňuje viacnásobnú dedičnosť a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použiť aspoň tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- keďže jazyk C nemá prístupové modifikátory \texttt{public}, \texttt{protected} alebo \texttt{private}. GObject definuje určitú formu kódu, tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
+Knižnica GObject poskytuje základnú objektovú triedu GObject\footnote{<\url{http://developer.gnome.org/gobject/unstable/}>}. GObject neumožňuje viacnásobnú dedičnosť a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použiť aspoň tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- keďže jazyk C nemá prístupové modifikátory \texttt{public}, \texttt{protected} alebo \texttt{private}. GObject definuje určitú formu kódu, tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
 Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentation-timer.h}.
-\begin{figure}[hb]
+\begin{figure}[hbpt]
 \begin{tiny}
 \begin{verbatim}
 /*
@@ -273,7 +274,6 @@ Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \te
 %TODO FINISH ME
 %\subsection{packing widgets}
 \section{Cairo}
-%TODO FIX ME
 Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rovnako ako GTK+ je použiteľná v~ostatných programovacích jazykoch za pomoci jazykových väzieb. Pomocou caira je možné kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z~týchto definícií:
 \begin{description}
 \item[Context] reprezentuje kontext v~ktorom chceme kresliť. To znamená, že popisuje čo, kam a ako.
@@ -282,19 +282,19 @@ Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rov
 \item[Source] reprezentuje zdroj pozostávajúci z~farby, gradientu, obrázku alebo vzoru. V~podobnej analógii ako v~predošlom prípade reprezentuje farbu štetca.
 \item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje kresba.
 \end{description}
-Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcií \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, \texttt{cairo\_set\_line\_width()} určí šírku čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti čiary (cestu) a funkcia \texttt{cairo\_stroke()} následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii projektu\cite{cairodoc}.
-\chapter{\texttt{evince}}
+Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcie \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, za pomoci \texttt{cairo\_set\_line\_width()} určí šírka čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti cestu a funkcia \texttt{cairo\_stroke()} následne nakreslí čiaru podľa zvolenej cesty a šírky. Cairo ponúka mnoho ďalších funkcií --- napríklad kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii projektu\cite{cairodoc}.
+\chapter{\texttt{Evince}}
 Prehliadač dokumentov \emph{evince} podporuje formáty PDF, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+. Program \emph{evince} je štruktorovaný do:
 \section{backend}
-V~backende sa nachádzajú knižnice fungujúce ako prípojné body pre knižnice na prácu s~jednotlivými formátmi. Napríklad knižnica libpdfdocument slúži na pripojenie knižnice Poppler.
+V~backende sa nachádzajú knižnice fungujúce ako prípojné body pre knižnice na prácu s~jednotlivými formátmi. Napríklad knižnica \texttt{libpdfdocument} slúži na pripojenie knižnice Poppler, ktorá sa už stará o načítanie a vykreslenie PDF dokumentu. Na pridanie podpory nového formátu do \emph{evince} teda stačí mať knižnicu, ktorá tento formát vie vykresliť na povrch caira a vytvoriť knižnicu v backende implementujúcu rozhranie \texttt{libdocument}.
 \section{libdocument}
-Knižnica libdocument obsahuje triedu EvDocument slúžiacu na zjednotenie operácií s dokumentami a oddelenie špecifických operácií pre jednotlivé formáty abstrakciou nad nimi.
+Knižnica libdocument obsahuje triedu \texttt{EvDocument} slúžiacu na zjednotenie operácií s dokumentami. Definuje rozhranie pre knižnice na prácu s jednotlivými formátmi a slúži na načítanie dokumentu z URI.
 \section{libview}
-Ide o knižnicu na prácu s náhľadmi na dokument starajúcu sa o zobrazenie dokumentu. Obsahuje triedy EvDocumentModel a EvView zjednocujúce prácu s náhľadmi ale aj triedu EvViewPresentation reprezentujúcu prezentačný mód \emph{evince}.
+Ide o knižnicu na prácu s náhľadmi na dokument starajúcu sa o zobrazenie dokumentu. Obsahuje triedy EvDocumentModel a EvView zjednocujúce prácu s náhľadmi ale aj triedu EvViewPresentation reprezentujúcu prezentačný mód \emph{evince}. 
 \section{shell}
 Tvorí jadro programu \emph{evince}, obsahuje väčšinu stavebných widgetov programu. V jadre je definovaná trieda okna programu EvWindow, bočný panel EvSidebar, metadáta EvMetadata a ďalšie.
 \subsection{metadata}
-Program evince plne využíva skoro celý rozsah platformy GNOME, jednou z jej ešte nepopísaných častí v tejto práci je GIO. Ide o knižnicu pre vstupno-výstupné operácie GVFS --- virtuálneho súborového systému GNOME --- poskytujúcu aj možnosť ukladať si metadáta. Ide o dáta o dátach používané programami na uloženie špecifických nastavení pre jednotlivé súbory. Napríklad program evince si takto ukladá informácie o veľkosti okna, aktuálnej strane atď. viac v ukážke \cite{meta}.
+Program evince plne využíva skoro celý rozsah platformy GNOME, jednou z jej ešte nepopísaných častí v tejto práci je GIO. Ide o knižnicu pre vstupno-výstupné operácie GVFS --- virtuálneho súborového systému GNOME --- poskytujúcu aj možnosť ukladať si metadáta. Ide o dáta o dátach používané programami na uloženie špecifických nastavení pre jednotlivé súbory. Napríklad program evince si takto ukladá informácie o veľkosti okna, aktuálnej strane atď. viac v ukážke \ref{meta}.
 \begin{figure}[hbpt]
 \begin{tiny}
 \begin{verbatim}
@@ -323,6 +323,7 @@ Práca pozostávala z~vytvorenia \texttt{EvDSCWindow} triedy (potomoka \texttt{G
 \chapter{Zaver}
 
 %Závěrečná kapitola obsahuje zhodnocení dosažených výsledků se zvláštním důrazem na vlastní přínos studenta včetně zhodnocení z širšího pohledu na řešenou problematiku. V závěru je vhodné uvést i možné směry dalšího výzkumu či vývoje. 
+\raggedright
 \bibliographystyle{plain}
 \bibliography{thesis}
 
