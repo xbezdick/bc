@@ -1,9 +1,10 @@
 \documentclass[12pt,oneside,final]{fithesis2}
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[IL2]{fontenc}
-\usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
-\newcommand\uv[1]{\quotedblbase #1\textquotedblleft}%
+\usepackage[T1]{fontenc}
+\usepackage[plainpages=false,pdfpagelabels,unicode,breaklinks]{hyperref}
+
+\newcommand\uv[1]{\quotedblbase #1\textquotedblleft}
 %\usepackage{listings}
 %\lstset{language=C}
 %\usepackage[dvips]{graphicx}
@@ -41,7 +42,7 @@
 \end{ThesisDeclaration}
 
 \begin{ThesisThanks}
-Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písaní práce a obzvlášť José Aliste.
+Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písaní práce a obzvlášť Joséovi Alisteovi.
 \end{ThesisThanks}  
 
 \begin{ThesisAbstract}
@@ -53,14 +54,14 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
 \end{ThesisKeyWords}
  
 \MainMatter
-%\sloppy
+\sloppy
 %\chapter{Predhovor}
 \setcounter{tocdepth}{3}
 \tableofcontents 
  
 \chapter{Úvod}
 
-Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint\footnote{text} a jeho formát PPT, alebo Impress\footnote{<\url{http://wiki.services.openoffice.org/wiki/Presenter_Screen}>} a jeho formát ODP\footnote{Open Document Presentation.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
+Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint a jeho formát PPT, alebo Impress a jeho formát ODP\footnote{Open Document Presentation --- otvorený formát prezentácií.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
 
 \emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~týmito nastaveniami:
 \begin{description}
@@ -74,7 +75,7 @@ Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentác
 \\
 Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
-\item Upraviť knižnicu Poppler\footnote{<http://poppler.freedesktop.org/>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
+\item Upraviť knižnicu Poppler\footnote{<\url{http://poppler.freedesktop.org/}>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
 \item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
 \item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
@@ -282,7 +283,7 @@ Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rov
 \item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje kresba.
 \end{description}
 Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcií \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, \texttt{cairo\_set\_line\_width()} určí šírku čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti čiary (cestu) a funkcia \texttt{cairo\_stroke()} následne čiaru (cestu) nakreslí. Cairo ponúka mnoho ďalších funkcií --- napríklad kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii projektu\cite{cairodoc}.
-\chapter{evince}
+\chapter{\texttt{evince}}
 Prehliadač dokumentov \emph{evince} podporuje formáty PDF, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+. Program \emph{evince} je štruktorovaný do:
 \section{backend}
 V~backende sa nachádzajú knižnice fungujúce ako prípojné body pre knižnice na prácu s~jednotlivými formátmi. Napríklad knižnica libpdfdocument slúži na pripojenie knižnice Poppler.
