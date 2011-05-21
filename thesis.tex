@@ -43,47 +43,49 @@
 \end{ThesisDeclaration}
 
 \begin{ThesisThanks}
-Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písaní práce a obzvlášť Joséovi Alisteovi. Takisto veľkou pomocou bol už existujúci kód vytvorený Johannesom Buchnerom.
+Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písaní práce a obzvlášť Josému Alisteovi. Takisto veľkou pomocou bol už existujúci kód vytvorený Johannesom Buchnerom.
 \end{ThesisThanks}  
 
 \begin{ThesisAbstract}
-Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou LaTeX Beamer triedy. Táto práca pridáva podporu viacerých monitorov a pridáva grafický časovač do prezentačného módu.
+Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou \LaTeX~Beamer triedy. Táto práca pridáva podporu viacerých monitorov a pridáva grafický časovač do prezentačného módu.
 \end{ThesisAbstract}
 
 \begin{ThesisKeyWords}
-Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
+Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, \LaTeX~Beamer
 \end{ThesisKeyWords}
  
 \MainMatter
-\sloppy
+%\sloppy
 %\chapter{Predhovor}
 \setcounter{tocdepth}{3}
 \tableofcontents 
  
 \chapter{Úvod}
 
-Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint a jeho formát PPT, alebo Impress a jeho formát ODP\footnote{Open Document Presentation --- otvorený formát prezentácií.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia, pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
+Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint a jeho formát PPT, alebo Impress a štandardný formát ODP\footnote{Open Document Presentation --- otvorený formát prezentácií.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia, pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých displejoch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~týmito nastaveniami:
+Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov štandardizovaný ISO 32000-1.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
+
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{\LaTeX~Beamer} triedy. Ide o~rozširujúcu triedu \LaTeX{} používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{\LaTeX~Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~týmito nastaveniami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
 \item[show notes] --- poznámky sú zľava pripojené k~jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen = <left,right,bottom,top>}.
 \item[show only notes]  --- vytvorí samostatný dokument pozostávajúci len z~poznámok.
 \end{description}
 
-Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v~programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR} --- rozšírenia \emph{X Window} systému --- je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v~článku \emph{Dual Screen Presentations with the LATEX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu postráda \cite{evbug}.
+Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v~programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v~článku \emph{Dual Screen Presentations with the \LaTeX Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu neposkytuje \cite{evbug}.
 \\
 \\
 Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
-\item Upraviť knižnicu Poppler\footnote{<\url{http://poppler.freedesktop.org/}>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor.
+\item Upraviť knižnicu Poppler\footnote{<\url{http://poppler.freedesktop.org/}>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor. Táto úprava by však bola špecifická len pre formát PDF a prehliadač dokumentov \emph{evince} podporuje aj iné formáty.
 \item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
 \item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
 
 Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v~diskusii pod hlásením o~chybe \cite{evbug}.
 
-Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre viacero monitorov do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie.  V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widgetu, ktorý je následne použitý v~kontrolnom okne dvoj-obrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{LaTeX Beamer} triedy \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
+Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre viacero monitorov do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie.  V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widgetu, ktorý je následne použitý v~kontrolnom okne dvoj-obrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora viacerých monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{\LaTeX Beamer} triedy \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{\LaTeX Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
 
 Druhá kapitola popisuje platformu GNOME a jej časti. V~podkapitolách sú bližšie popísané použité časti. V~tretej kapitole je popísaný program \emph{evince} a jeho úprava. Na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
@@ -117,24 +119,24 @@ V~roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GI
 \hline 
 \end{tabular}
 \end{scriptsize}
-\caption{Platforma GNOME \cite{GNOMEPlatform}}
+\caption{Komponenty platformy GNOME \cite{GNOMEPlatform}}
 \label{tab.GNOME}
 \end{center}
 \end{table}
 
 \section{GLib}
-Obecná knižnica funkcií GLib vznikla oddelením kódu ktorý nebol priamo špecifický pre grafické užívateľské rozhranie GTK+. GLib poskytuje abstrakciu nad platformami a používa sa ako základ programov. GLib sa dá ďalej rozdeliť na niekoľko častí. 
+Všeobecná knižnica funkcií GLib vznikla oddelením kódu ktorý nebol priamo špecifický pre grafické užívateľské rozhranie GTK+. GLib poskytuje abstrakciu nad platformami a používa sa ako základ programov. GLib sa dá ďalej rozdeliť na niekoľko častí. 
 
-\textbf{GLib Fundamentals} obsahuje základné typy a ich limity, štandardné makrá, makrá na typovú konverziu a endianitu, číselné definície matematických konštánt a operácie s~desatinnou čiarkou, špeciálne makrá a podporu atomických operácií.
+\textbf{GLib Fundamentals} obsahuje základné typy a konštanty, štandardné makrá, makrá na typovú konverziu a endianitu, číselné definície matematických konštánt a operácie s~desatinnou čiarkou, špeciálne makrá a podporu atomických operácií.
 
 \textbf{GLib Core Application Support} poskytuje správu udalostí, podporu vlákien, asynchrónne fronty, dynamické moduly, správu pamäte, vstupno-výstupné kanály a systém správ.
  
 \textbf{GLib Utilities}, v~ktorej sa okrem iného nachádza podpora pre časovače a funkcie na prácu s~URI\footnote{Uniform Resource Identifier --- jednotný identifikátor zdrojov definovaný v~RFC 3986 <\url{http://www.ietf.org/rfc/rfc3986.txt}>.}.
 
-\textbf{GLib Data Types} na rozšírené dátové typy, napríklad n-árne stromy, cache a reťazce a \textbf{GLib Tools}.
+\textbf{GLib Data Types} obsahuje definíciu rozšírených dátové typy, napríklad n-árne stromy, cache a reťazce.
 
-\subsection{GMainLoop}
-O~správu udalostí v~programoch sa stará štruktúra GMainLoop. Tieto udalosti môžu pochádzať z~rôznych zdrojov ako napríklad ukazovatele na súbory, časovače alebo vlastné zdroje pridané pomocou \texttt{g\_source}\texttt{\_attach()}. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v~prípade nečinnosti. Hlavný cyklus GMainLoop sa vytvorí pomocou funkcie \texttt{g\_main\_loop\_new()}. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať dynamicky za behu, je potreba zavolať \texttt{g\_main\_loop\_run()}.
+\subsection{GMainLoop --- udalosti a časovače}
+O~správu udalostí v~programoch sa stará cyklus popísaný štruktúrou \texttt{GMainLoop}. Tieto udalosti môžu pochádzať z~rôznych zdrojov ako napríklad ukazovatele na súbory, časovače alebo vlastné zdroje pridané pomocou \texttt{g\_source}\texttt{\_attach()}. Každá udalosť má priradenú prioritu. Takisto je možné pridať funkcie, ktoré sa spustia v~prípade nečinnosti. Hlavný cyklus sa vytvorí pomocou funkcie \texttt{g\_main\_loop\_new()}. Po pridaní úvodných zdrojov udalostí, ktoré je možné pridávať aj dynamicky za behu, je potrebné zavolať \texttt{g\_main\_loop\_run()}.
 
 V~práci bolo potrebné pravidelne prekresliť časť okna. Pomocou funkcie \texttt{g\_timeout\_add\_seconds()} dôjde k~vytvoreniu zdroja udalostí a jeho pripojeniu ku kontextu hlavného cyklu. Časovač sa taktiež dá vytvoriť pomocou funkcie \texttt{g\_timeout\_add()}. Rozdiel medzi týmito funkciami je, že \texttt{\_seconds()} sa snaží zoskupiť zobudenia. Dosahuje tým väčšiu úsporu energie za cenu menšej presnosti.
 
@@ -148,18 +150,18 @@ URI je kompaktná sekvencia znakov, ktorá identifikuje abstraktný alebo fyzick
 \end{description}
 Na prevod medzi názvom súboru a URI poskytuje GLib makrá \texttt{g\_filename\_from\_uri()} a \texttt{g\_filename\_to\_uri()}.
 
-\begin{figure}[hb]
+\begin{figure}[hbpt]
 \includegraphics[width=\linewidth]{Diagram1.pdf}
 \caption{Schéma URI s~príkladom.}
 \label{obr.URI}
 \end{figure}
 
 \section{GObject}
-GLib Object System je objektovo orientovaný framework pre jazyk C postavený na GLib. GObject je navrhnutý tak, aby bolo možné exportovať jeho C-API\footnote{API --- rozhranie pre programovanie aplikácií.} do ostatných jazykov za pomoci, tzv. lepiaceho kódu\footnote{<\url{http://developer.gnome.org/gobject/stable/ch01s02.html}>}.
+GLib Object System je objektovo orientovaná knižnica pre jazyk C postavená na GLib. GObject je navrhnutý tak, aby bolo možné exportovať jeho API\footnote{API --- rozhranie pre programovanie aplikácií.} do ostatných jazykov za pomoci jazykových väzieb\footnote{<\url{http://developer.gnome.org/gobject/stable/ch01s02.html}>}.
 
-Súčasťou GLib je dynamický typový systém postavený na štruktúre GType\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gtype.html}>}. Táto štruktúra v~skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkosť inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď.
+Súčasťou GLib je dynamický typový systém postavený na štruktúre 	\texttt{GType}\footnote{<\url{http://developer.gnome.org/gobject/unstable/chapter-gtype.html}>}. Táto štruktúra v~skratke definuje veľkosť triedy, inicializačné a deštrukčné funkcie, veľkosť inštancie triedy, pravidlá inštancií\footnote{V C++ typ nového operátora.}, kopírovacie funkcie atď.
 
-Knižnica GObject poskytuje základnú objektovú triedu GObject\footnote{<\url{http://developer.gnome.org/gobject/unstable/}>}. GObject neumožňuje viacnásobnú dedičnosť a je implementovaný na spôsob Javových rozhraní. Každá GObject trieda sa implementuje pomocou minimálne dvoch štruktúr, ale zvykom je použiť aspoň tri --- štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií --- keďže jazyk C nemá prístupové modifikátory \texttt{public}, \texttt{protected} alebo \texttt{private}. GObject definuje určitú formu kódu, tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
+Knižnica GObject poskytuje základnú objektovú triedu \texttt{GObject}\footnote{<\url{http://developer.gnome.org/gobject/unstable/}>}. \texttt{GObject} neumožňuje viacnásobnú dedičnosť a umožnuje definovať rozhrania tried podobne ako Java. Každá \texttt{GObject} trieda sa implementuje pomocou minimálne dvoch štruktúr --- štruktúra triedy a štruktúra objektu. Zvykom je použiť aspoň tri, štruktúru triedy, štruktúru inštancií a privátnu štruktúru inštancií. Implementujú sa tým prístupové modifikátory \texttt{public}, \texttt{protected} alebo \texttt{private}. GObject definuje určitú formu kódu, tzv. boilerplate\footnote{<\url{http://developer.gnome.org/gobject/stable/howto-gobject.html}>}.
 Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentation-timer.h}.
 \begin{figure}[hbpt]
 \begin{tiny}
@@ -220,52 +222,51 @@ Pri inicializácii triedy \texttt{ev\_presentation\_timer\_class\_init()} musí 
 
 GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \texttt{g\_object\_class\_install\_property()}.
 
-Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
+Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií \texttt{GObject} triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
 
-Systém správ GObjectu sa skladá zo signálov a uzáverov\footnote{<\url{{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}}>}. Uzávere sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v~GNOME. Uzávere sú abstrakciou generického spätného volania pre signály. Štruktúra uzáveru obsahuje tri objekty:
+Systém správ GObjectu sa skladá zo signálov a uzáverov\footnote{<\url{{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}}>}. Uzávery sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v~GNOME. Uzávery sú abstrakciou generického spätného volania pre signály. Štruktúra uzáveru obsahuje tri objekty:
 \begin{itemize}
 \item ukazovateľ na vyhradenú funkciu, tzv. callback.
 \item ukazovateľ na užívateľské dáta ktorý je predaný callbacku pri volaní uzáveru.
 \item ukazovateľ na funkciu deštruktora uzáveru.
 \end{itemize}
-Princíp uzáver funguje tak, že program spí v~hlavnom cykle pokiaľ sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii. Udalosť je reprezentovaná odoslaným signálom z~objektu, v~ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá vyhradenú funkciu. Zjednodušená verzia pripojenia signálov prebieha pomocou volania:
+Princíp uzáver funguje tak, že program spí v~hlavnom cykle pokiaľ sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii (callback). Udalosť je reprezentovaná odoslaným signálom z~objektu, v~ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá callback. Pripojenie signálov prebieha pomocou volania:
 \begin{verbatim}
 gulong g_signal_connect( gpointer      *objekt,
                          const gchar   *nazov,
                          GCallback     funkcia,
                          gpointer      uziv_data );
-\end{verbatim} Pre ktoré bude vyhradená funkcia vyzerať približne takto: 
+\end{verbatim} Callback môže vyzerať takto: 
 \begin{verbatim}
 void callback_func( GtkWidget *objekt,
                     gpointer   uziv_data );
 \end{verbatim}
-A~pokiaľ chceme predať callback funkcii len jeden objekt je treba použiť \texttt{g\_signal\_connect\_swapped()}.
+Pokiaľ chceme predať callback funkcii len jeden objekt je treba použiť \texttt{g\_signal\_connect\_swapped()}.
 
 \section{GTK+}
-GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikácií, tzv. widgetov. Okrem programovacieho jazyka C knižnica podporuje mnoho ďalších za pomoci jazykových väzieb. GTK+ používa tieto knižnice:
+GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikácií. Pozostáva z nízkoúrovňových kresliacich prostriedkov a elementov grafických rozhraní, tzv. widgetov. Okrem programovacieho jazyka C knižnica podporuje mnoho ďalších za pomoci jazykových väzieb. GTK+ používa tieto knižnice založené na \textbf{GLib}:
 \begin{description}
-\item[GLib] používa napríklad obalením hlavného cyklu do \texttt{gtk\_main()}.
 \item[GObject] každý widget je potomkom objektu GObject.
 \item[GIO] VFS\footnote{Virtual File System - systém na abstrakciu nad súborovými systémami} API na abstrakciu vstupno-výstupných operácií.
 \item[cairo] na vykresľovanie widgetov.
 \item[Pango] na prácu s~textom.
 \item[ATK] toolkit na zvýšenie dostupnosti pre zrakovo, či sluchovo postihnutých ľudí.
-\item[GdkPixBuf] malá knižnica na tvorbu objektov z~obrázkov.
-\item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11, Winows \dots
+\item[GdkPixBuf] knižnica na tvorbu objektov z~obrázkov.
+\item[GDK] poskytujúca abstrakčnú vrstvu nad okennými systémami ako napríklad X11 alebo Windows.
 \end{description}
-Spojením týchto knižníc dodáva GTK+ flexibilitu a zjednodušuje prenositeľnosť na iné platformy.
-Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky\footnote{<\url{http://developer.gnome.org/gtk/unstable/ch01.html}>} a na základe tejto hierarchie je pri tvorbe nového widgetu dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z~nových funkcií alebo len prepísania štandardných funkcií triedy.
+Spojenie týchto knižníc dodáva GTK+ flexibilitu a zjednodušuje prenositeľnosť na iné platformy.
+Programy postavené na GTK+ inicializujú GTK+ volaním funkcie \texttt{gtk\_init()}. Táto funkcia nastaví napríklad štandardný handler pre signály, mapu farieb atď. Následne je nutné vytvoriť základné widgety a volaním \texttt{gtk\_main()} skočiť do hlavného cyklu. Triedy GTK+ sú usporiadané hierarchicky\footnote{<\url{http://developer.gnome.org/gtk/unstable/ch01.html}>} a na základe tejto hierarchie je pri tvorbe nového widgetu dobré správne zvoliť rodičovskú triedu tak, aby implementovala čo najviac funkcionality a aby ďalšie rozšírenia pozostávali z~nových funkcií alebo len prepísania (preťaženia) funkcií rodičovskej triedy.
 \subsection{GtkWidget}
-GtkWidget je abstraktnou základnou triedou pre všetky widgety\footnote{<\url{http://developer.gnome.org/gtk/unstable/GtkWidget.html}>}, či už ide o~okno, tlačidlo alebo kontajner. Táto trieda sa stará o~životný cyklus, stavy a štýly widgetov. Životný cyklus widgetu pozostáva z~vytvorenia nového objektu, pripojenia handlerov a signálov --- inicializácii (\texttt{realize}) --- presunutia widgetu na jeho pozíciu a určenie veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}) a následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
+GtkWidget je abstraktnou základnou triedou pre všetky widgety\footnote{<\url{http://developer.gnome.org/gtk/unstable/GtkWidget.html}>}, či už ide o~okno, tlačidlo alebo kontajner. Táto trieda sa stará o~životný cyklus, stavy a štýly widgetov. Životný cyklus widgetu pozostáva z~vytvorenia nového objektu, pripojenia handlerov a signálov, inicializácie (\texttt{realize}), určenie pozície widgetu a jeho veľkosti (\texttt{size-request, size-allocate, configure-event}), zobrazenia widgetu (\texttt{show}) a následného vykreslenia (\texttt{draw}), ukončenia (\texttt{delete-event}) a mnoho ďalších. Napríklad prepisom funkcie \texttt{draw} počas inicializácie triedy a vytvorením vlastnej \texttt{\_draw()} funkcie sa dostaneme ku cairo kontextu widgetu a je možné ovládať vykreslenie widgetu.
 \subsection{GtkWindow}
 Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \texttt{GtkContainer}, môže obsahovať ďalšie widgety. Pomocou tejto triedy je možné narábať podobne ako s~oknom narába užívateľ. Funkcia \texttt{gtk\_window\_move()} slúži na presunutie okna na danú pozíciu. Túto operáciu má vykonať správca okien, ten ju však bude ignorovať, dokým okno nieje naozaj zobrazené. V~práci bolo nutné čé najskôr presunúť kontrolné okno a okno s~prezentáciou na svoje pozície. Na to však museli prebehnúť všetky udalosti a okno sa muselo zobraziť. Preto bolo nutné prejsť niekoľkými iteráciami hlavného cyklu ako je zobrazené v~nasledujúcej ukážke kódu \ref{iterate}.
 \begin{figure}[hbtp]
 \begin{tiny}
 \begin{verbatim}
-	/* Wait for windows to get shown before moving them */
-	while(gtk_events_pending())
-		gtk_main_iteration();
-	/* something like http://mail.gnome.org/archives/gtk-list/2008-June/msg00061.html */
+    /* Wait for windows to get shown before moving them */
+    while(gtk_events_pending())
+        gtk_main_iteration();
+    /* something like http://mail.gnome.org/archives/gtk-list/2008-June/msg00061.html */
 \end{verbatim}
 \end{tiny}
 \caption{Kód na dobehnutie čakajúcich udalostí pomocou iterácie hlavného cyklu.}
@@ -274,7 +275,7 @@ Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \te
 %TODO FINISH ME
 %\subsection{packing widgets}
 \section{Cairo}
-Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rovnako ako GTK+ je použiteľná v~ostatných programovacích jazykoch za pomoci jazykových väzieb. Pomocou caira je možné kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.}, GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z~týchto definícií:
+Cairo je knižnica určená na kreslenie 2D vektorových obrázkov napísaná v~jazyku C a rovnako ako GTK+ je použiteľná v~ostatných programovacích jazykoch za pomoci jazykových väzieb. Pomocou cairo je možné kresliť do viacerých výstupov ako napríklad PDF, PNG\footnote{Portable Network Graphics.} alebo GtkWindow. Model kreslenia pomocou knižnice cairo pozostáva z~týchto definícií:
 \begin{description}
 \item[Context] reprezentuje kontext v~ktorom chceme kresliť. To znamená, že popisuje čo, kam a ako.
 \item[Surface] reprezentuje povrch na ktorý chceme kresliť. Môže to byť ktorýkoľvek z~typov definovaných v~\texttt{\_cairo\_surface\_type}.
@@ -317,7 +318,7 @@ attributes:
 
 \texttt{EvMetadata} obsahuje get/set funkcie na prácu s metadátami a ukladá ich vo formáte \texttt{metadata::evince::key}. Pomocou metadát je v práci vyriešené zapamätanie si času potrebného na prezentáciu, umiestnenie okien a URI súbora s poznámkami.
 
-\chapter{Úprava programu \emph{evince}}
+\chapter{Úprava programu evince}
 Práca pozostávala z~vytvorenia \texttt{EvDSCWindow} triedy (potomoka \texttt{GtkWindow}), pomocou ktorej je vytvorené kontrolné okno v~\texttt{EvWindow} vo funkci \texttt{ev\_window\_run\_presentation()}. Do funkcie \texttt{ev\_window\_run\_presentation()} bola pridaná kontrola dispozície dvoch alebo viacerých monitorov. Kontrolné okno pozostáva z náhľadu na dokument, bočného panelu, tzv. sidebar, rozširujúceho panelu obsahujúceho nasledujúce tlačidlá: prepínanie monitorov, otvorenie súboru s poznámkami, ukončenie prezentácie, zobrazenie sidebaru a nastavenie časovača. Ďalej sa v kontrolnom okne nachádza časovač \texttt{EvPresentationTimer}. Po vytvorení kontrolného okna je mu nutné predať ukazovatele na pôvodné okno, aktuálny dokument, pohľad prezentácie a metadáta pomocou funkcie \texttt{ev\_dscwindow\_set\_presentation()}. \texttt{EvDSCWindow} následne nastaví \texttt{EvDocumentModel} náhľadu na poznámky a sidebaru, pripojí signály \texttt{destroy} a \texttt{notify::page} pre pohľad prezentácie a \texttt{notify::page} pre \texttt{EvDocumentModel} na callbacky. \texttt{Destroy} signál je napojený na funkciu GTK+ \texttt{gtk\_widget\_destroy()}. Signály \texttt{notify::page} slúžia na synchronizovanie strán medzi jednotlivými náhľadmi. Callbacky pre tieto signály následne volajú funkciu \texttt{ev\_dscwindow\_set\_page()}, ktorá nastaví správnu stranu na všetkých náhľadoch a časovači, ak išlo o presun z úvodného slajdu, spustí časovač.
 \section{Prepínanie monitorov}
 O prepínanie monitorov sa starajú funkcie \texttt{ev\_dscwindow\_switch\_monitors()} na zámenu monitorov a \texttt{ev\_dscwindow\_windows\_placement()} na následné presunutie okien. %GDK TODO
