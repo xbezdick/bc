@@ -62,7 +62,7 @@ Cairo, evince, GDK, GLib, GNOME, GObject, GTK+, LaTeX Beamer
  
 \chapter{Úvod}
 
-Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint a jeho formát PPT, alebo Impress a jeho formát ODP\footnote{Open Document Presentation --- otvorený formát prezentácií.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
+Existuje nespočetné množstvo programov na tvorbu prezentácií a snáď ešte viac formátov, do ktorých je možné prezentácie uložiť. Napríklad PowerPoint a jeho formát PPT, alebo Impress a jeho formát ODP\footnote{Open Document Presentation --- otvorený formát prezentácií.}. Najtypickejší spôsob prezentácie v~dnešnej dobe je prezentácia, pri ktorej má prednášajúci svoj počítač a jeho slajdy sú premietané pripojeným projektorom na plátno za ním. Práve pre takéto prípady majú programy zabudovanú podporu pre prezentácie na viacerých monitoroch a na obrazovke počítača zobrazujú podporný materiál pre prednášajúceho. Takto sa nemusí prednášajúci publiku otáčať chrbtom. Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
 
 \emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{LaTeX Beamer} triedy. Ide o~rozširujúcu triedu LaTeXu používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{LaTeX Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~týmito nastaveniami:
 \begin{description}
@@ -88,7 +88,7 @@ Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu
 Druhá kapitola popisuje platformu GNOME a jej časti. V~podkapitolách sú bližšie popísané použité časti. V~tretej kapitole je popísaný program \emph{evince} a jeho úprava. Na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
 \chapter{GNOME Platforma}
-V~roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP\footnote{GNU Image Manipulation Program.}. V~tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvoriť jednoduché prostredie pracovnej plochy, ktorý je postavený na GTK+. Tieto projekty zostali na seba silne naviazané a spoločne s~ďalšími tvoria platformu GNOME \ref{tab.GNOME}. Ďalej sú uvedené len knižnice použité v~tejto práci a popis riešenia špecifických problémov v~rámci nich.
+V~roku 1997 Spencer Kimball a Peter Mattis vytvorili projekt GTK+ pre projekt GIMP\footnote{GNU Image Manipulation Program.}. V~tom istom roku Miguel de Icaza a Federico Mena založili projekt GNOME, ktorého cieľom je vytvoriť jednoduché prostredie pracovnej plochy, ktorý je postavený na GTK+. Tieto projekty zostali na seba silne naviazané a spoločne s~ďalšími tvoria platformu GNOME \ref{tab.GNOME}. Z dôvodu veľkosti platformy GNOME budú ďalej popísané len knižnice použité v~tejto práci a riešenia špecifických problémov v~rámci nich.
 \begin{table}[hbtp]
 \begin{center}
 \begin{scriptsize}
@@ -165,28 +165,25 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
 \begin{tiny}
 \begin{verbatim}
 /*
- * Copyright a licenčné informácie
+ *Copyright a licenčné informácie
  */
- /*Kontrola inklúzie.*/
+/*Kontrola inklúzie.*/
  #ifndef _EV_PRESENTATION_TIMER_H_
  #define _EV_PRESENTATION_TIMER_H_
- /*Špeciálne makro, ktoré v~prípade c++ kompilátora pridá extern okolo hlavičky.*/
+/*Špeciálne makro, ktoré v~prípade c++ kompilátora pridá extern okolo hlavičky.*/
  G_BEGIN_DECLS
  typedef struct _EvPresentationTimerClass        EvPresentationTimerClass;
  typedef struct _EvPresentationTimer             EvPresentationTimer;
  typedef struct _EvPresentationTimerPrivate      EvPresentationTimerPrivate;
- /* Typové makrá */
+/* Typové makrá */
  #define EV_TYPE_PRESENTATION_TIMER              (ev_presentation_timer_get_type ())
- #define EV_PRESENTATION_TIMER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), \\
-                                                  EV_TYPE_PRESENTATION_TIMER, EvPresentationTimer))
- #define EV_PRESENTATION_TIMER_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), \\
-                                                  EV_TYPE_PRESENTATION_TIMER, EvPresentationTimerClass))
- #define EV_IS_PRESENTATION_TIMER(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), \\
-                                                  EV_TYPE_PRESENTATION_TIMER))
- #define EV_IS_PRESENTATION_TIMER_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), \\
-                                                  EV_TYPE_PRESENTATION_TIMER))
- #define EV_PRESENTATION_TIMER_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), \\
-                                                  EV_TYPE_PRESENTATION_TIMER, \\
+ #define EV_PRESENTATION_TIMER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), EV_TYPE_PRESENTATION_TIMER, \
+                                                  EvPresentationTimer))
+ #define EV_PRESENTATION_TIMER_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), EV_TYPE_PRESENTATION_TIMER, \
+                                                  EvPresentationTimerClass))
+ #define EV_IS_PRESENTATION_TIMER(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), EV_TYPE_PRESENTATION_TIMER))
+ #define EV_IS_PRESENTATION_TIMER_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), EV_TYPE_PRESENTATION_TIMER))
+ #define EV_PRESENTATION_TIMER_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), EV_TYPE_PRESENTATION_TIMER, \
                                                   EvPresentationTimerClass))
  struct _EvPresentationTimerClass
  {
@@ -210,8 +207,9 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
                                                                   gint time);
  GType                   ev_presentation_timer_get_type          (void);
  GtkWidget              *ev_presentation_timer_new               (void);
+ 
  G_END_DECLS
- #endif /*
+ #endif
 \end{verbatim}
 \end{tiny}
 \caption{Okomentovaná ukážka kódu.}
@@ -220,7 +218,9 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
 
 Pri inicializácii triedy \texttt{ev\_presentation\_timer\_class\_init()} musí funkcia \texttt{g\_type\_class\_add\_private()} registrovať privátnu štruktúru pre triedu\cite{gprivate}. Pri alokácii objektu sú privátne štruktúry pre typy a typy ich rodičov sprístupnené sekvenčne v~rovnakom pamäťovom bloku ako ich verejné štruktúry. Nakoniec pri inicializácii inštancie v~tomto prípade \texttt{ev\_presentation\_timer\_init()} sa za pomoci makra \texttt{G\_TYPE\_INSTANCE\_GET\_PRIVATE()} získa ukazovateľ na privátnu dátovú štruktúru. Na implementáciu \texttt{ev\_presentation\_timer\_get\_type()} funkcie a na definíciu ukazovateľa na rodičovskú triedu sa používa makro \texttt{G\_DEFINE\_TYPE}.
 
-GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \texttt{g\_object\_class\_install\_property()}. Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
+GObject poskytuje štandardný get/set mechanizmus pre objektové vlastnosti. Vlastnosti sa registrujú pri inicializácii objektu volaním funkcie \texttt{g\_object\_class\_install\_property()}.
+
+Pri riešení problému bolo potrebné pridať vlastnosť \texttt{PROP\_PAGE} do \texttt{EvViewPresentation}. \texttt{PROP\_PAGE} odkazuje na číslo aktuálnej stránky. Jej obsah sa získa pomocou \texttt{g\_object\_get\_property()} a nastavuje sa pomocou \texttt{g\_object\_set\_property()}. Túto funkčnost zabezpečuje prepísanie štandardných funkcií GObject triedy počas inicializácie triedy vo funkcii \texttt{ev\_view\_presentation\_class\_init()}. Následne pri zmene vlastnosti môže objekt vyslať \uv{nofity} signál pre danú vlastnosť pomocou funkcie \texttt{g\_object\_notify()}.
 
 Systém správ GObjectu sa skladá zo signálov a uzáverov\footnote{<\url{{http://developer.gnome.org/gobject/unstable/chapter-signal.html\#closure}}>}. Uzávere sú kľúčový koncept pre asynchrónne doručovanie signálov široko používaný v~GNOME. Uzávere sú abstrakciou generického spätného volania pre signály. Štruktúra uzáveru obsahuje tri objekty:
 \begin{itemize}
@@ -283,18 +283,18 @@ Cairo je knižnica určená na kreslenie 2D vektorov napísaná v~jazyku C a rov
 \item[Mask] reprezentuje šablónu, podľa ktorej sa aplikuje kresba.
 \end{description}
 Kreslenie pomocou cairo prebieha tak, že sa vytvorí kontext \texttt{cairo\_t}, nastaví sa mu povrch a nastavenia. V~prípade tejto práce išlo o~kontext s~povrchom widgetu, ktorý bol špeciálne z~tohto dôvodu potomkom triedy \texttt{GtkDrawingArea}. Následne pomocou funkcie \texttt{cairo\_set\_source\_rgb()} sa vyberie farba, za pomoci \texttt{cairo\_set\_line\_width()} určí šírka čiary, \texttt{cairo\_move\_to()} presunie na východziu pozíciu, \texttt{cairo\_line\_to()} určí vlastnosti cestu a funkcia \texttt{cairo\_stroke()} následne nakreslí čiaru podľa zvolenej cesty a šírky. Cairo ponúka mnoho ďalších funkcií --- napríklad kreslenie obdĺžnikov \texttt{cairo\_rectangle()}, vyplnenie cesty \texttt{cairo\_fill()} --- bližšie popísaných v~dokumentácii projektu\cite{cairodoc}.
-\chapter{\texttt{Evince}}
-Prehliadač dokumentov \emph{evince} podporuje formáty PDF, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<http://freshmeat.net/projects/gpdf/>.}, ktorý vznikol z~Xpdf\footnote{<http://foolabs.com/xpdf/about.html>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+. Program \emph{evince} je štruktorovaný do:
+\chapter{Evince}
+Prehliadač dokumentov \emph{evince} podporuje formáty PDF, PS\footnote{Post Script.}, DjVu\footnote{Formát na ukladanie naskenovaných dokumentov.}, TIFF\footnote{Tag Image File Format.} a DVI\footnote{DeVice Independent.}. Bol vytvorený ako prepis programu GPdf\footnote{<\url{http://freshmeat.net/projects/gpdf/}>.}, ktorý vznikol z~Xpdf\footnote{<\url{http://foolabs.com/xpdf/about.html}>.}, s~cieľom nahradiť viaceré prehliadače dokumentov v~GNOME jednou jednoduchou aplikáciou \cite{evince}. \emph{Evince} z~projektu Xpdf používa knižnicu Poppler a takisto ako GPdf je založený na knižnici GTK+. Program \emph{evince} je štruktorovaný do:
 \section{backend}
 V~backende sa nachádzajú knižnice fungujúce ako prípojné body pre knižnice na prácu s~jednotlivými formátmi. Napríklad knižnica \texttt{libpdfdocument} slúži na pripojenie knižnice Poppler, ktorá sa už stará o načítanie a vykreslenie PDF dokumentu. Na pridanie podpory nového formátu do \emph{evince} teda stačí mať knižnicu, ktorá tento formát vie vykresliť na povrch caira a vytvoriť knižnicu v backende implementujúcu rozhranie \texttt{libdocument}.
 \section{libdocument}
 Knižnica libdocument obsahuje triedu \texttt{EvDocument} slúžiacu na zjednotenie operácií s dokumentami. Definuje rozhranie pre knižnice na prácu s jednotlivými formátmi a slúži na načítanie dokumentu z URI.
 \section{libview}
-Ide o knižnicu na prácu s náhľadmi na dokument starajúcu sa o zobrazenie dokumentu. Obsahuje triedy EvDocumentModel a EvView zjednocujúce prácu s náhľadmi ale aj triedu EvViewPresentation reprezentujúcu prezentačný mód \emph{evince}. 
+Ide o knižnicu na prácu s náhľadmi na dokument starajúcu sa o zobrazenie dokumentu. Obsahuje triedy \texttt{EvDocumentModel} a \texttt{EvView} zjednocujúce prácu s náhľadmi ale aj triedu \texttt{EvViewPresentation} reprezentujúcu prezentačný mód \emph{evince}. Cieľom libview je umožniť vývojárom iných aplikácií zabudovať \texttt{EvView} widget do ich programov a mať tak vstavaný prehliadač dokumentov bez nutnosti použiť užívateľské rozhranie \emph{evince}.
 \section{shell}
-Tvorí jadro programu \emph{evince}, obsahuje väčšinu stavebných widgetov programu. V jadre je definovaná trieda okna programu EvWindow, bočný panel EvSidebar, metadáta EvMetadata a ďalšie.
+Tvorí jadro programu \emph{evince}, obsahuje väčšinu stavebných widgetov programu. V jadre je definovaná trieda okna programu \texttt{EvWindow}, bočný panel \texttt{EvSidebar}, metadáta \texttt{EvMetadata} a ďalšie triedy.
 \subsection{metadata}
-Program evince plne využíva skoro celý rozsah platformy GNOME, jednou z jej ešte nepopísaných častí v tejto práci je GIO. Ide o knižnicu pre vstupno-výstupné operácie GVFS --- virtuálneho súborového systému GNOME --- poskytujúcu aj možnosť ukladať si metadáta. Ide o dáta o dátach používané programami na uloženie špecifických nastavení pre jednotlivé súbory. Napríklad program evince si takto ukladá informácie o veľkosti okna, aktuálnej strane atď. viac v ukážke \ref{meta}.
+Program evince plne využíva celý rozsah platformy GNOME, jednou z jej ešte nepopísaných častí v tejto práci je GIO. Ide o knižnicu pre vstupno-výstupné operácie GVFS --- virtuálneho súborového systému GNOME --- poskytujúcu aj možnosť ukladať si metadáta. Ide o dáta o dátach používané programami na uloženie špecifických nastavení pre jednotlivé súbory \cite{metad}. Napríklad program evince si takto ukladá informácie o veľkosti okna, aktuálnej strane atď. viac v ukážke \ref{meta}.
 \begin{figure}[hbpt]
 \begin{tiny}
 \begin{verbatim}
@@ -313,15 +313,23 @@ attributes:
 \caption{Metadáta o súbore \texttt{gtk-tut.pdf} vypísané pomocou \texttt{gtk-info}.}
 \label{meta}
 \end{figure}
+
+
+\texttt{EvMetadata} obsahuje get/set funkcie na prácu s metadátami a ukladá ich vo formáte \texttt{metadata::evince::key}. Pomocou metadát je v práci vyriešené zapamätanie si času potrebného na prezentáciu, umiestnenie okien a URI súbora s poznámkami.
+
 \chapter{Úprava programu \emph{evince}}
 Práca pozostávala z~vytvorenia \texttt{EvDSCWindow} triedy (potomoka \texttt{GtkWindow}), pomocou ktorej je vytvorené kontrolné okno v~\texttt{EvWindow} vo funkci \texttt{ev\_window\_run\_presentation()}. Do funkcie \texttt{ev\_window\_run\_presentation()} bola pridaná kontrola dispozície dvoch alebo viacerých monitorov. Kontrolné okno pozostáva z náhľadu na dokument, bočného panelu, tzv. sidebar, rozširujúceho panelu obsahujúceho nasledujúce tlačidlá: prepínanie monitorov, otvorenie súboru s poznámkami, ukončenie prezentácie, zobrazenie sidebaru a nastavenie časovača. Ďalej sa v kontrolnom okne nachádza časovač. Po vytvorení kontrolného okna je mu nutné predať ukazovatele na pôvodné okno, aktuálny dokument, pohľad prezentácie a metadáta pomocou funkcie \texttt{ev\_dscwindow\_set\_presentation()}. \texttt{EvDSCWindow} následne nastaví \texttt{EvDocumentModel} náhľadu na poznámky a sidebaru, pripojí signály \texttt{destroy} a \texttt{notify::page} pre pohľad prezentácie a \texttt{notify::page} pre \texttt{EvDocumentModel} na callbacky. \texttt{Destroy} signál je napojený na funkciu GTK+ \texttt{gtk\_widget\_destroy()}. Signály \texttt{notify::page} slúžia na synchronizovanie strán medzi jednotlivými náhľadmi. Callbacky pre tieto signály následne volajú funkciu \texttt{ev\_dscwindow\_set\_page()}, ktorá nastaví správnu stranu na všetkých náhľadoch a časovači, ak išlo o presun z úvodného slajdu, spustí časovač.
 \section{Prepínanie monitorov}
+O prepínanie monitorov sa starajú funkcie \texttt{ev\_dscwindow\_switch\_monitors()} na zámenu monitorov a \texttt{ev\_dscwindow\_windows\_placement()} na následné presunutie okien. %GDK TODO
 \section{Poznámky}
+Po stlačení tlačidla na načítanie poznámok sa emituje signál \texttt{clicked}, na ktorý je pripojený callback \texttt{ev\_dscwindow\_notes\_interaction()}. V tejto funkcii sa vytvorí \texttt{GtkFileChooserDialog} widget určený na vytvorenie dialógového okna na vyberanie súborov a v prípade existencie metadát je mu predaná URI k naposledy použitým poznámkam aktuálneho dokumentu. Po spustení dialógu pomocou funkcie \texttt{gtk\_dialog\_run()} a prijmutí \texttt{GTK\_RESPONSE\_ACCEPT} je dokument načítaný do \texttt{EvDocument} a vytvorí sa \texttt{EvDocumentModel}, ktorý je potom nastavený náhľadu na poznámky.
+%nacitanie notes TODO
 \section{Inicializácia a ukončenie}
+%init funkcia dispose
 \section{Časovač}
+%EvPresentationTimer widget
 
 \chapter{Zaver}
-
 %Závěrečná kapitola obsahuje zhodnocení dosažených výsledků se zvláštním důrazem na vlastní přínos studenta včetně zhodnocení z širšího pohledu na řešenou problematiku. V závěru je vhodné uvést i možné směry dalšího výzkumu či vývoje. 
 \raggedright
 \bibliographystyle{plain}
