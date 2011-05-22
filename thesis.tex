@@ -1,10 +1,10 @@
 \documentclass[12pt,oneside,final]{fithesis2}
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
+\usepackage[IL2,T1]{fontenc}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
 %breaklinks
-\usepackage[toc,page]{appendix}
+\usepackage[toc]{appendix}
 
 \newcommand\uv[1]{\quotedblbase #1\textquotedblleft}
 %\usepackage{listings}
@@ -21,7 +21,7 @@
 %% Define a new 'leo' style for the package that will use a smaller font.
 \makeatletter
 \def\url@leostyle{%
-  \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\scriptsize\ttfamily}}}
+ \@ifundefined{selectfont}{\def\UrlFont{\sf}}{\def\UrlFont{\scriptsize\ttfamily}}}
 \makeatother
 %% Now actually use the newly defined style.
 \urlstyle{leo}
@@ -54,7 +54,7 @@
 
 \begin{ThesisThanks}
 Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písaní práce a obzvlášť Josému Alisteovi. Takisto veľkou pomocou bol už existujúci kód vytvorený Johannesom Buchnerom.
-\end{ThesisThanks}  
+\end{ThesisThanks} 
 
 \begin{ThesisAbstract}
 Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou \LaTeX~Beamer triedy. Táto práca pridáva podporu dvoch monitorov a pridáva grafický časovač do prezentačného módu.
@@ -80,7 +80,7 @@ Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Po
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
 \item[show notes] --- poznámky sú zľava pripojené k~jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen = <left,right,bottom,top>}.
-\item[show only notes]  --- vytvorí samostatný dokument pozostávajúci len z~poznámok.
+\item[show only notes] --- vytvorí samostatný dokument pozostávajúci len z~poznámok.
 \end{description}
 
 Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v~programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v~článku \emph{Dual Screen Presentations with the \LaTeX~Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu neposkytuje \cite{evbug}.
@@ -95,7 +95,7 @@ Do úvahy prichádzali nasledujúce riešenia:
 
 Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v~diskusii pod hlásením o~chybe \cite{evbug}.
 
-Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre dva monitory do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie.  V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widgetu, ktorý je následne použitý v~kontrolnom okne dvoj-obrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora dvoch monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{\LaTeX~Beamer} triedy \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{\LaTeX~Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
+Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre dva monitory do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie. V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widgetu, ktorý je následne použitý v~kontrolnom okne dvoj-obrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora dvoch monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{\LaTeX~Beamer} triedy \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{\LaTeX~Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
 
 Druhá kapitola popisuje platformu GNOME a jej časti. V~podkapitolách sú bližšie popísané použité časti. V~tretej kapitole je popísaný program \emph{evince} a jeho úprava je zhrnutá v~štvrtej kapitole. Na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
@@ -184,41 +184,41 @@ Pre hlavičkové súbory je boilerplate popísaný na obrázku \ref{ev-presentat
  #define _EV_PRESENTATION_TIMER_H_
 /*Špeciálne makro, ktoré v prípade c++ kompilátora pridá extern okolo hlavičky.*/
  G_BEGIN_DECLS
- typedef struct _EvPresentationTimerClass        EvPresentationTimerClass;
- typedef struct _EvPresentationTimer             EvPresentationTimer;
- typedef struct _EvPresentationTimerPrivate      EvPresentationTimerPrivate;
+ typedef struct _EvPresentationTimerClass    EvPresentationTimerClass;
+ typedef struct _EvPresentationTimer         EvPresentationTimer;
+ typedef struct _EvPresentationTimerPrivate  EvPresentationTimerPrivate;
 /* Typové makrá */
- #define EV_TYPE_PRESENTATION_TIMER              (ev_presentation_timer_get_type ())
- #define EV_PRESENTATION_TIMER(object)           (G_TYPE_CHECK_INSTANCE_CAST ((object), EV_TYPE_PRESENTATION_TIMER, \
-                                                  EvPresentationTimer))
- #define EV_PRESENTATION_TIMER_CLASS(klass)      (G_TYPE_CHECK_CLASS_CAST ((klass), EV_TYPE_PRESENTATION_TIMER, \
-                                                  EvPresentationTimerClass))
- #define EV_IS_PRESENTATION_TIMER(object)        (G_TYPE_CHECK_INSTANCE_TYPE ((object), EV_TYPE_PRESENTATION_TIMER))
- #define EV_IS_PRESENTATION_TIMER_CLASS(klass)   (G_TYPE_CHECK_CLASS_TYPE ((klass), EV_TYPE_PRESENTATION_TIMER))
+ #define EV_TYPE_PRESENTATION_TIMER         (ev_presentation_timer_get_type ())
+ #define EV_PRESENTATION_TIMER(object)      (G_TYPE_CHECK_INSTANCE_CAST ((object), EV_TYPE_PRESENTATION_TIMER, \
+                                             EvPresentationTimer))
+ #define EV_PRESENTATION_TIMER_CLASS(klass) (G_TYPE_CHECK_CLASS_CAST ((klass), EV_TYPE_PRESENTATION_TIMER, \
+                                             EvPresentationTimerClass))
+ #define EV_IS_PRESENTATION_TIMER(object)   (G_TYPE_CHECK_INSTANCE_TYPE ((object), EV_TYPE_PRESENTATION_TIMER))
+ #define EV_IS_PRESENTATION_TIMER_CLASS(klass)  (G_TYPE_CHECK_CLASS_TYPE ((klass), EV_TYPE_PRESENTATION_TIMER))
  #define EV_PRESENTATION_TIMER_GET_CLASS(object) (G_TYPE_INSTANCE_GET_CLASS ((object), EV_TYPE_PRESENTATION_TIMER, \
                                                   EvPresentationTimerClass))
  struct _EvPresentationTimerClass
  {
-         GtkDrawingAreaClass parent_class;
-         /* členovia triedy */
+     GtkDrawingAreaClass parent_class;
+     /* členovia triedy */
  };
  struct _EvPresentationTimer 
  {
-         GtkDrawingArea                  parent_instance;
-         /*privátna štruktúra je potom definovaná v~.c súbore*/
-         EvPresentationTimerPrivate     *priv;
-         /*členovia inštancie*/ 
+     GtkDrawingArea         parent_instance;
+     /*privátna štruktúra je potom definovaná v~.c súbore*/
+     EvPresentationTimerPrivate   *priv;
+     /*členovia inštancie*/ 
 };
- void                    ev_presentation_timer_set_pages         (EvPresentationTimer *ev_timer,
-                                                                  guint pages);
- void                    ev_presentation_timer_set_page          (EvPresentationTimer *ev_timer,
-                                                                  guint page);
- void                    ev_presentation_timer_start             (EvPresentationTimer *ev_timer);
- void                    ev_presentation_timer_stop              (EvPresentationTimer *ev_timer);
- void                    ev_presentation_timer_set_time          (EvPresentationTimer *ev_timer,
-                                                                  gint time);
- GType                   ev_presentation_timer_get_type          (void);
- GtkWidget              *ev_presentation_timer_new               (void);
+ void          ev_presentation_timer_set_pages     (EvPresentationTimer *ev_timer,
+                                 guint pages);
+ void          ev_presentation_timer_set_page     (EvPresentationTimer *ev_timer,
+                                 guint page);
+ void          ev_presentation_timer_start       (EvPresentationTimer *ev_timer);
+ void          ev_presentation_timer_stop       (EvPresentationTimer *ev_timer);
+ void          ev_presentation_timer_set_time     (EvPresentationTimer *ev_timer,
+                                 gint time);
+ GType          ev_presentation_timer_get_type     (void);
+ GtkWidget       *ev_presentation_timer_new        (void);
  
  G_END_DECLS
  #endif
@@ -242,10 +242,10 @@ Systém správ GObjectu sa skladá zo signálov a uzáverov\footnote{<\url{{http
 \end{itemize}
 Princíp uzáver funguje tak, že program spí v~hlavnom cykle pokiaľ sa neudeje nejaká udalosť a kontrola je následne predaná vyhradenej funkcii (callback). Udalosť je reprezentovaná odoslaným signálom z~objektu, v~ktorom sa táto udalosť udiala. Na jednotlivé signály sa pripája manipulátor (uzávera alebo \uv{handler}), ktorý tieto signály odchytí a zavolá callback. Pripojenie signálov prebieha pomocou volania:
 \begin{verbatim}
-gulong g_signal_connect( gpointer      *objekt,
-                         const gchar   *nazov,
-                         GCallback     funkcia,
-                         gpointer      uziv_data );
+gulong g_signal_connect( gpointer    *objekt,
+                         const gchar *nazov,
+                         GCallback    funkcia,
+                         gpointer     uziv_data );
 \end{verbatim} Callback môže vyzerať takto: 
 \begin{verbatim}
 void callback_func( GtkWidget *objekt,
@@ -258,7 +258,7 @@ GIMP Toolkit je sada knižníc určená na tvorbu rozhrania grafických aplikác
 \begin{description}
 \item[GObject] každý widget je potomkom objektu GObject.
 \item[GIO] VFS\footnote{Virtual File System - systém na abstrakciu nad súborovými systémami} API na abstrakciu vstupno-výstupných operácií.
-\item[cairo] na vykresľovanie widgetov.
+\item[Cairo] na vykresľovanie widgetov.
 \item[Pango] na prácu s~textom.
 \item[ATK] toolkit na zvýšenie dostupnosti pre zrakovo, či sluchovo postihnutých ľudí.
 \item[GdkPixBuf] knižnica na tvorbu objektov z~obrázkov.
@@ -273,10 +273,10 @@ Trieda GtkWindow popisuje okno a jeho vlastnosti, ktoré, ako potomok triedy \te
 \begin{figure}[hbtp]
 \begin{tiny}
 \begin{verbatim}
-    /* Wait for windows to get shown before moving them */
-    while(gtk_events_pending())
-        gtk_main_iteration();
-    /* something like http://mail.gnome.org/archives/gtk-list/2008-June/msg00061.html */
+  /* Wait for windows to get shown before moving them */
+  while(gtk_events_pending())
+    gtk_main_iteration();
+  /* something like http://mail.gnome.org/archives/gtk-list/2008-June/msg00061.html */
 \end{verbatim}
 \end{tiny}
 \caption{Kód na dobehnutie čakajúcich udalostí pomocou iterácie hlavného cyklu.}
@@ -311,14 +311,14 @@ Program evince plne využíva celý rozsah platformy GNOME, jednou z~jej ešte n
 \begin{verbatim}
 $ gvfs-info -a "metadata::*" gtk-tut.pdf 
 attributes:
-  metadata::evince::page: 2
-  metadata::evince::sidebar_size: 170
-  metadata::evince::sidebar_visibility: 1
-  metadata::evince::window_height: 751
-  metadata::evince::window_maximized: 1
-  metadata::evince::window_width: 1280
-  metadata::evince::window_x: 0
-  metadata::evince::window_y: 49
+ metadata::evince::page: 2
+ metadata::evince::sidebar_size: 170
+ metadata::evince::sidebar_visibility: 1
+ metadata::evince::window_height: 751
+ metadata::evince::window_maximized: 1
+ metadata::evince::window_width: 1280
+ metadata::evince::window_x: 0
+ metadata::evince::window_y: 49
 \end{verbatim}
 \end{tiny}
 \caption{Metadáta súboru \texttt{gtk-tut.pdf} vypísané pomocou \texttt{gtk-info}.}
@@ -343,7 +343,7 @@ Po stlačení tlačidla na načítanie poznámok sa emituje signál \texttt{clic
 \section{Inicializácia a ukončenie}
 Inicializácia a ukončenie je definovaná tým, že každý widget je potomok \texttt{GObject}. Pri inicializácii triedy \texttt{ev\_\-dscwindow\_\-class\_\-init} je prepísaná funkcia \texttt{GObject} triedy na odstránenie objektu \texttt{dispose} na funkciu \texttt{ev\_\-dscwindow\_\-dispose()}. Táto funkcia sa postará o~vrátenie prezentačného okna na pôvodnú pozíciu pred tým než odstráni prezentačné okno. Pri inicializácii objektu sa nastavia všetky privátne premenné na počiatočnú hodnotu a vytvoria sa všetky základné widgety. Sidebar a náhľad na poznámky sú vložené do \texttt{GtkHPaned} --- kontajnera s~horizontálne oddelenými widgetmi s~možnosťou posúvať separátor. Tlačidlá sú vložené do \texttt{GtkExpander}, kontajnera, ktorý je umožňuje schovať svojich potomkov. \texttt{GtkExpander} je spolu s~časovačom vložený do druhého \texttt{GtkHPaned} a potom sú oba vložené do kontajnera vertikálneho boxu \texttt{GtkVBox}. Na to aby mohli byť widgety zobrazené je na ne nutné zavolať \texttt{gtk\_\-widget\_\-show()} alebo v~tomto prípade zavolať funkciu \texttt{gtk\_\-widget\_\-show\_\-all()}, ktorá zobrazí widget a všetkých jeho potomkov (u~kontajnerov je rodič kontajner a potomok widget doň vložený). Na záver sa pri inicializácii objektu nastaví poloha separátoru v~oboch \texttt{GtkHPaned} pomocou \texttt{gtk\_\-paned\_\-set\_\-position()}, ale podla všetkého je v~tejto funkcii chyba. Narozdiel od dokumentácie funkcia zo vstupu berie skôr percentuálny pomer k~veľkosti obrazovky, než počet bodov od počiatku.
 \section{Časovač}
-Widget časovača \texttt{EvPresentationTimer} slúži na zobrazenie aktuálnej polohy v~prezentácii a v~prípade, keď prezentácia je spustená, na zobrazenie zostávajúceho času. Kreslenie prebieha v~preťaženej funkcii  \texttt{ev\_\-presentation\_\-timer\_\-draw()} pomocou caira a bolo takisto nutné preťažiť \texttt{ev\_\-presentation\_\-timer\_\-dispose()}, kde je potrené kontrolovať či beží \texttt{timeout}, a ak áno, odstránit ho. Vo funkcii \texttt{ev\_\-presentation\_\-timer\_\-set\_\-time()} sa nastaví predpokladaný čas prezentácie. Táto funkcia je volaná z~funkcie callbacku pre signál \texttt{value-changed} objektu \texttt{GtkSpinButton}\footnote{<\url{http://developer.gnome.org/gtk/stable/GtkSpinButton.html}>} v~kontrolnom okne. Funkcia \texttt{ev\_\-presentation\_\-timer\_\-set\_\-pages()} nastavuje \texttt{ev\_\-timer->priv->pages} a funkcia \texttt{ev\_\-presentation\_\-timer\_\-set\_\-page()} nastaví aktuálnu stranu s~tým, že zavolá \texttt{gtk\_\-widget\_\-queue\_\-draw()} na prekreslenie widgetu. Časovač sa spúšťa funkciou \texttt{ev\_\-presentation\_\-timer\_\-start()} a zastavuje funkciou \texttt{ev\_\-presentation\_\-timer\_\-stop()}. Časovač naznačuje polohu v~slajdoch kreslením vertikálnej čiary na pozícii ((šírka widgetu)/(počet strán)*(aktuálna strana)) a zostávajúci čas obdĺžnikom cez celý widget, ktorého počiatok sa postupne zľava presúva na pravý koniec widgetu.
+Widget časovača \texttt{EvPresentationTimer} slúži na zobrazenie aktuálnej polohy v~prezentácii a v~prípade, keď prezentácia je spustená, na zobrazenie zostávajúceho času. Kreslenie prebieha v~preťaženej funkcii \texttt{ev\_\-presentation\_\-timer\_\-draw()} pomocou caira a bolo takisto nutné preťažiť \texttt{ev\_\-presentation\_\-timer\_\-dispose()}, kde je potrené kontrolovať či beží \texttt{timeout}, a ak áno, odstránit ho. Vo funkcii \texttt{ev\_\-presentation\_\-timer\_\-set\_\-time()} sa nastaví predpokladaný čas prezentácie. Táto funkcia je volaná z~funkcie callbacku pre signál \texttt{value-changed} objektu \texttt{GtkSpinButton}\footnote{<\url{http://developer.gnome.org/gtk/stable/GtkSpinButton.html}>} v~kontrolnom okne. Funkcia \texttt{ev\_\-presentation\_\-timer\_\-set\_\-pages()} nastavuje \texttt{ev\_\-timer->priv->pages} a funkcia \texttt{ev\_\-presentation\_\-timer\_\-set\_\-page()} nastaví aktuálnu stranu s~tým, že zavolá \texttt{gtk\_\-widget\_\-queue\_\-draw()} na prekreslenie widgetu. Časovač sa spúšťa funkciou \texttt{ev\_\-presentation\_\-timer\_\-start()} a zastavuje funkciou \texttt{ev\_\-presentation\_\-timer\_\-stop()}. Časovač naznačuje polohu v~slajdoch kreslením vertikálnej čiary na pozícii ((šírka widgetu)/(počet strán)*(aktuálna strana)) a zostávajúci čas obdĺžnikom cez celý widget, ktorého počiatok sa postupne zľava presúva na pravý koniec widgetu.
 
 \chapter{Záver}
 Práca v~rámci projektu \emph{evince} rozširuje prezentačný mód programu o~podporu dvoch monitorov. Zvyšuje tým použiteľnosť formátu PDF na prezentácie. Úpravou \emph{evince} v~častiach \texttt{libview} a \texttt{shell} pomocou knižníc z~platformy GNOME zachováva prenositeľnosť a pridáva danú funkcionalitu nielen pre formát PDF, ale pre všetky formáty podporované programom \emph{evince}. Vďaka tomu má väčšiu šancu na začlenenie do projektu. V čase písania práce tento proces prebiehal a nebol ešte ukončený. Kód bude pred začlenením ešte niekoľko krát upravený na základe kritiky ostatných vývojárov v~procese schvaľovania. Kód je písaný tak aby bol rozšíriteľný o~možnosť práce aj s~viacerými než len dvoma obrazovkami. Časovač bude v~dohľadnej dobe rozšírený o~možnosť spustiť a ukončiť časovač prostredníctvom kliku na jeho widget. V~diskusii s~vývojármi \emph{evince} vznikol návrh riešenia podpory rozdelenia PDF súborov s~poznámkami vytvorenými \LaTeX~Beamer triedou. Ide však o~špecifickú vlastnosť, ktorá by vyžadovala zmenu rozhrania pre backend knižnice a úpravu libview. Toto riešenie sa zatiaľ neplánuje z~už uvedeného dôvodu príliš veľkej špecifickosti.
