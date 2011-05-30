@@ -1,7 +1,10 @@
 \documentclass[12pt,oneside,final]{fithesis2}
 \usepackage[slovak]{babel}
 \usepackage[utf8]{inputenc}
-\usepackage[IL2,T1]{fontenc}
+%\usepackage[IL2,T1]{fontenc}
+\usepackage[T1]{fontenc}
+\usepackage{tgpagella}
+\usepackage{cmap}
 \usepackage[plainpages=false,pdfpagelabels,unicode]{hyperref}
 %breaklinks
 \usepackage[toc]{appendix}
@@ -57,7 +60,7 @@ Rád by som poďakoval vývojárom \emph{evince} za ústretovú pomoc pri písan
 \end{ThesisThanks} 
 
 \begin{ThesisAbstract}
-Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou \LaTeX~Beamer triedy. Táto práca pridáva podporu dvoch monitorov a pridáva grafický časovač do prezentačného módu.
+Prehliadač dokumentov \emph{evince} obsahuje prezentačný mód, ktorý je často používaný na prezentácie vo formáte PDF vytvorené pomocou triedy \LaTeX~Beamer. Táto práca pridáva podporu dvoch monitorov a pridáva grafický časovač do prezentačného módu.
 \end{ThesisAbstract}
 
 \begin{ThesisKeyWords}
@@ -76,26 +79,26 @@ Existuje veľké množstvo programov na tvorbu prezentácií a snáď ešte viac
 
 Jedným z~formátov používaných na prezentácie je aj formát PDF\footnote{Portable Document Format --- prenositeľný formát dokumentov štandardizovaný ISO 32000-1.}. Väčšina programov na prácu s~týmto formátom ale nepodporuje viacero monitorov. Známy program používaný na formát PDF je program s~otvoreným zdrojovým kódom \emph{evince}.
 
-\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu PDF dokumentov vytvorených pomocou \emph{\LaTeX~Beamer} triedy. Ide o~rozširujúcu triedu \LaTeX{} používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. \emph{\LaTeX~Beamer} trieda je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~týmito nastaveniami:
+\emph{Evince} obsahuje prezentačný mód, ktorý je často používaný na prezentáciu dokumentov PDF vytvorených pomocou triedy \emph{\LaTeX~Beamer}. Ide o~rozširujúcu triedu \LaTeX{} používanú miesto klasických tried dokumentu typu \texttt{article} alebo \texttt{book} \cite{abclatex}. Trieda \emph{\LaTeX~Beamer} je navrhnutá so zreteľom na potrebu pre podporný materiál k~prezentáciám pozostávajúci zo sylabov, priesvitiek, ale aj poznámok \cite{beamer}. Tie zvyknú byť vytlačené, ale pri použití projektora môžu byť zobrazené aj na obrazovke počítača. Okrem módu poznámok je možné zobraziť na druhej obrazovke preklady alebo predošlé slajdy. O~zobrazení poznámok sa rozhoduje v~preambule dokumentu pomocou \verb|\setbeameroption{}| s~nasledujúcimi nastaveniami:
 \begin{description}
 \item[hide notes] --- štandardné nastavenie, pri ktorom sa poznámky nepridávajú do výsledného dokumentu.
 \item[show notes] --- poznámky sú zľava pripojené k~jednotlivým slajdom. Ich pozícia sa ďalej upravuje pomocou \texttt{on second \\ screen = <left,right,bottom,top>}.
 \item[show only notes] --- vytvorí samostatný dokument pozostávajúci len z~poznámok.
 \end{description}
 
-Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v~programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR}, rozšírenia \emph{X Window} systému, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v~článku \emph{Dual Screen Presentations with the \LaTeX~Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu neposkytuje \cite{evbug}.
+Výsledný dokument by následne mohol byť prezentovaný podobne ako prezentácie v~programoch PowerPoint alebo Impress, kde na projektore je samotná prezentácia a na obrazovke prednášajúceho sa buď zobrazujú aktuálne slajdy alebo poznámky. Alebo za pomoci \emph{XRandR}, rozšírenia systému \emph{X Window}, je možné spojiť viacero obrazoviek do jednej veľkej a roztiahnuť na ňu prezentáciu tak, ako to popisuje Klaus Dohmen v~článku \emph{Dual Screen Presentations with the \LaTeX~Beamer Class under X} \cite{dohmen}. \emph{Evince} však túto funkcionalitu neposkytuje \cite{evbug}.
 \\
 \\
 Do úvahy prichádzali nasledujúce riešenia:
 \begin{itemize}
 \item Upraviť knižnicu Poppler\footnote{<\url{http://poppler.freedesktop.org/}>.} a na jej úrovni dokument rozdeliť a predať \emph{evince} dve vrstvy, ktoré by následne presunul na vybraný monitor. Táto úprava by však bola špecifická len pre formát PDF a prehliadač dokumentov \emph{evince} podporuje aj iné formáty.
 \item Vyššie spomenutá možnosť spojiť obrazovky do jednej veľkej a roztiahnuť okno prezentácie tak, aby poznámky boli na jednom monitore a prezentácia na druhom. Táto možnosť by ale vyžadovala rovnaké rozlíšenie obidvoch monitorov a znemožnila by podporu viacerých platforiem.
-\item Upraviť \emph{evince} na úrovni knižnice GTK+ a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
+\item Upraviť \emph{evince} na úrovni knižnice GTK+\footnote{GIMP toolkit.} a použiť už existujúcu triedu \texttt{EvView}. Toto riešenie sa nakoniec ukázalo ako najschodnejšie, keďže zachováva prenositeľnosť a nevyžaduje veľký zásah do už existujúceho kódu.
 \end{itemize}
 
 Bližšie informácie a popis ďalších možných riešení sa dajú nájsť v~diskusii pod hlásením o~chybe \cite{evbug}.
 
-Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre dva monitory do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie. V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widgetu, ktorý je následne použitý v~kontrolnom okne dvoj-obrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora dvoch monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou \emph{\LaTeX~Beamer} triedy \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{\LaTeX~Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
+Cieľom bakalárskej práce v~rámci projektu \emph{evince} bolo pridať podporu pre dva monitory do prezentačného módu \emph{evince} v~podobe kontrolného okna na monitore prednášajúceho a časovač s~nenápadným zobrazením priebehu prezentácie. V~prípade časovača ide o~vytvorenie ovládacieho prvku, tzv. widget, ktorý je následne použitý v~kontrolnom okne dvojobrazovkovej prezentácie. V~tomto okne prednášajúci nastaví predpokladanú dĺžku prezentácie a následne sa pri prezentácii zobrazí po úvodnom slajde na spodnej časti kontrolného okna nenápadný indikátor priebehu, podobne ako je to v~programe MagicPoint \cite{mgp}. Podpora dvoch monitorov je zameraná na prezentácie, ktoré sú vytvorené pomocou triedy \emph{\LaTeX~Beamer} \cite{beamer}. Ide však len o~prezentácie s~poznámkami, ktoré boli vytvorené ako samostatný súbor, pretože podpora jedného celistvého dokumentu vývojárom \emph{evince} prišla príliš špecifická pre \emph{\LaTeX~Beamer}, a tak by znížila šancu začlenenia výsledného kódu do projektu \emph{evince}.
 
 Druhá kapitola popisuje platformu GNOME a jej časti. V~podkapitolách sú bližšie popísané použité časti. V~tretej kapitole je popísaný program \emph{evince} a jeho úprava je zhrnutá v~štvrtej kapitole. Na záver sú prezentované ďalšie možnosti rozšírenia projektu.
 
